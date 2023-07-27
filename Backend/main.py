@@ -22,3 +22,6 @@ def get_tasks():
 def create_task(task: str):
     tasks.append(task)
     return {"message": "Task created successfully", "task": task}
+
+
+#from maccc
