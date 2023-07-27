@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -12,16 +12,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-tasks = ["first tast", "second task"]
+tasks = ["first task", "second task"]
 
 @app.get("/tasks/")
 def get_tasks():
     return tasks
 
 @app.post("/tasks/")
-def create_task(task: str):
-    tasks.append(task)
-    return {"message": "Task created successfully", "task": task}
+async def create_task(request: Request):
+    body = await request.body()
+    return {"message": "Task created successfully", "task": body} 
 
 
 #from maccc
