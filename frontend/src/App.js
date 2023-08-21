@@ -5,14 +5,16 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
 
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL; // Access the environment variable
+  
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/tasks/").then((response) => {
+    axios.get(`${apiBaseUrl}/tasks/`).then((response) => {
       setTasks(response.data);
     });
-  }, []);
+  }, [apiBaseUrl]); // Include apiBaseUrl as a dependency
 
   const handleAddTask = () => {
-    axios.post("/tasks/", { task: newTask }).then((response) => {
+    axios.post(`${apiBaseUrl}/tasks/`, { task: newTask }).then((response) => {
       setTasks([...tasks, newTask]);
       setNewTask("");
     });

@@ -12,7 +12,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-tasks = ["first task", "second task"]
+tasks = ["first task", "second task", "hahaha"]
 
 @app.get("/tasks/")
 def get_tasks():
@@ -24,4 +24,3 @@ async def create_task(request: Request):
     return {"message": "Task created successfully", "task": body} 
 
 
-#from maccc
