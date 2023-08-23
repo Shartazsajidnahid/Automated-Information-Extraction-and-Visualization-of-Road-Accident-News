@@ -37,10 +37,11 @@ function Allnews() {
           <div className="col-md-4 mb-4" key={index}>
             <div className="card">
               <div className="card-body">
+                <h5 className="card-title">{newsItem?.headline}</h5>
                 <p className="card-text">
                   {truncateText(newsItem?.content, 100)}
                 </p>
-                <Link to={`/news/${index}`} newsitem={newsItem.content} > Read more </Link>
+                <Link to={`/news/${index}`} newsitem={newsItem?.content} > Read more </Link>
                 {/* <Link to={{ pathname: `/news/${index}`, state: { newsItem: newsItem } }}>Read More</Link> Use Link */}
               </div>
             </div>
