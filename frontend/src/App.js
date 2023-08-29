@@ -4,11 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Allnews from "./News/Allnews";
 import Newsdetail from "./News/Newsdetail";
+import Demo from "./Demo";
+
+
 // import Newsdetail from "./News/Newsdetail";
 
 
 function App() {
   return (
+    // <Demo></Demo>
     <Router>
       <div className="container">
         <Routes>

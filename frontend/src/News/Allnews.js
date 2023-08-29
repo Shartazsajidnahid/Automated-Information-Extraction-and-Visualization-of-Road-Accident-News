@@ -2,26 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
-
 function Allnews() {
   const [news, setNews] = useState([]);
-  const [newNews, setNewNews] = useState("");
 
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    axios.get(`${apiBaseUrl}/news/`).then((response) => {
+    axios.get(`${apiBaseUrl}/scrape/news/`).then((response) => {
       setNews(response.data);
     });
   }, [apiBaseUrl]);
 
-  const handleAddNews = () => {
-    axios.post(`${apiBaseUrl}/news/`, { news: newNews }).then((response) => {
-      setNews([...news, newNews]);
-      setNewNews("");
-    });
-  };
+
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -47,17 +39,6 @@ function Allnews() {
             </div>
           </div>
         ))}
-      </div>
-      <div className="mt-4">
-        <input
-          type="text"
-          value={newNews}
-          onChange={(e) => setNewNews(e.target.value)}
-          className="form-control"
-        />
-        <button onClick={handleAddNews} className="btn btn-primary mt-2">
-          Add News
-        </button>
       </div>
     </div>
   );
