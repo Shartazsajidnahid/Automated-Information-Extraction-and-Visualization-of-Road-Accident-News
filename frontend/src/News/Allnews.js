@@ -8,11 +8,10 @@ function Allnews() {
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    axios.get(`${apiBaseUrl}/scrape/news/`).then((response) => {
+    axios.get(`${apiBaseUrl}/scrape/dummy_news/`).then((response) => {
       setNews(response.data);
     });
   }, [apiBaseUrl]);
-
 
 
   const truncateText = (text, maxLength) => {
