@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routes.scrape import router as scrape
+from api.routes.news import router as news
 from api.routes.demo import router as demo
 
 app = FastAPI()
@@ -17,6 +17,6 @@ app.add_middleware(
 )
 
 
-app.include_router(scrape, prefix="/scrape")
+app.include_router(news, prefix="/news")
 app.include_router(demo, prefix="/demo")
 

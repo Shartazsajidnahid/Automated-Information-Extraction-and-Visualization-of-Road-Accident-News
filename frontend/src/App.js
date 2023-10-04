@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Im
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Allnews from "./News/Allnews";
-import Newsdetail from "./News/Newsdetail";
+import NewsArticleDetails from "./News/NewsArticleDetails";
 import Demo from "./Demo";
 
 
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/allnews" element={<Allnews />} />
           <Route path="/" element={<Allnews />} />
-          <Route path="/news/:id" element={<Newsdetail />} />
+          <Route path="/news-article/:id" element={<NewsArticleDetails />} />
         </Routes>
       </div>
     </Router>
