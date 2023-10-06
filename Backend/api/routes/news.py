@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from ..controllers.news import scrape_all
 from ..controllers.dummynews import dummy_news, get_news_article
-from ..models.news_article import NewsArticle
-from ....Backend.db import news_articles_collection
+from ..models.NewsArticle import NewsArticle
+from ...db import news_articles_collection
 
 router = APIRouter()
 
