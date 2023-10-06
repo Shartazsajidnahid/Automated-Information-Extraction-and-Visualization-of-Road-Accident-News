@@ -1,20 +1,17 @@
 from fastapi import APIRouter, HTTPException
-from ..controllers.news import scrape_all, fetch_all_news, create_news
+from ..controllers.news import fetch_all_news, create_news
 from ..controllers.dummynews import dummy_news, get_news_article
 from ..models.NewsArticle import NewsArticle
-from ..database.db import news_articles_collection
 
 router = APIRouter()
 
-@router.get("/allnews/")
-def get_tasks():
-    return scrape_all()
+# @router.get("/allnews/")
+# def get_tasks():
+#     return scrape_all()
 
 @router.get("/dummy_news")
 def get_dummy_news():
     return dummy_news()
-
-
 
 
 @router.get("/news-article/{article_id}")
