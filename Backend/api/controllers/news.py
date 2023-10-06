@@ -50,5 +50,5 @@ async def create_news(news):
     document = news
     result = await news_articles_collection.insert_one(document)
     # document["ss"] = str(result.inserted_id)
-    # print(document)
+    print(document)
     return document

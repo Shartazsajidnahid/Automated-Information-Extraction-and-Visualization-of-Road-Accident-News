@@ -16,7 +16,8 @@ def get_dummy_news():
 
 @router.get("/news-article/{article_id}")
 def get_single_news(article_id:int):
-    return get_news_article(article_id)
+    print("article_id")
+    # return get_news_article(article_id)
 
 
 @router.get("/news-article/")

@@ -8,8 +8,9 @@ function Allnews() {
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    axios.get(`${apiBaseUrl}/news/dummy_news/`).then((response) => {
+    axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
       setNews(response.data);
+      
     });
   }, [apiBaseUrl]);
 
@@ -20,6 +21,7 @@ function Allnews() {
     }
     return text;
   };
+
   return (
     <div>
       <h1 className="mt-4">News Articles</h1>
@@ -27,14 +29,15 @@ function Allnews() {
       <div className="row">
         {news.map((newsItem, index) => (
           <div className="col-md-4 mb-4" key={index}>
-            <div className="card bg-secondary text-white">
+            <div className="card ">
               <div className="card-body">
-                <h5 className="card-title">{newsItem?.title}</h5>
+              <h5 className="card-title text-white bg-secondary">{newsItem?._id}</h5>
                 <p className="card-text">
                   {truncateText(newsItem?.content, 100)}
                 </p>
                 <Link to={`/news-article/${newsItem?.id}`} className="btn btn-sm btn-warning">Read More</Link>
                 {/* <Link to={{ pathname: `/news/${index}`, state: { newsItem: newsItem } }}>Read More</Link> Use Link */}
+              
               </div>
             </div>
           </div>

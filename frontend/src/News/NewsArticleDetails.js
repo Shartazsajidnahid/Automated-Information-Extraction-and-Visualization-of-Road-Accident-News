@@ -17,7 +17,7 @@ const NewsArticleDetails = () => {
         setNewsArticle(response.data);
       });
     // setNewsArticle(n1);
-  }, [articleId]);
+  }, [articleId, apiBaseUrl]);
 
   if (!newsArticle) {
     return <div>Loading...</div>;
