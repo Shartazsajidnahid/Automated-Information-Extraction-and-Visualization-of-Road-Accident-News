@@ -1,5 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
+from ..database.db import news_articles_collection
+from ..models.NewsArticle import NewsArticle
 
 
 url1 = 'https://en.prothomalo.com/'
@@ -34,3 +36,19 @@ def scrape_all():
                     scraped_articles.append(item)
     
     return scraped_articles
+
+
+
+async def fetch_all_news(): 
+    news = []
+    cursor = news_articles_collection.find({})
+    async for document in cursor:
+        news.append(NewsArticle(**document))
+    return news
+
+async def create_news(news):
+    document = news
+    result = await news_articles_collection.insert_one(document)
+    # document["ss"] = str(result.inserted_id)
+    # print(document)
+    return document

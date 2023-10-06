@@ -14,10 +14,8 @@ news_articles = [
     NewsArticle(id=9, title="পর্বত শৃঙ্গে পাওয়া হয়েছে নতুন জীবন", content="পর্বত শৃঙ্গে নতুন জীবনের সংকেত প্রাপ্ত হয়েছে, এই সংবাদের বিষয়টি নিয়ে বিস্তারিত আলোচনা হচ্ছে।"),
 ]
 
-
-
 def dummy_news():
-    return news_articles
+    return news_articles 
 
 def get_news_article(article_id: int):
     for news_item in news_articles:
