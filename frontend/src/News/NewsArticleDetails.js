@@ -32,8 +32,8 @@ const NewsArticleDetails = () => {
       <div className="container">
         <div className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title">{newsArticle?.news.title}</h5>
-            <p className="card-text">{newsArticle?.news.content}</p>
+            <h5 className="card-title">{newsArticle?.title}</h5>
+            <p className="card-text">{newsArticle?.content}</p>
           </div>
         </div>
 
@@ -41,19 +41,19 @@ const NewsArticleDetails = () => {
           <div className="card-body">
             <ul>
               <li>
-                <strong>Location:</strong> {newsArticle?.location}
+                <strong>Location:</strong> {newsArticle?.parameters.location}
               </li>
               <li>
-                <strong>Time:</strong> {newsArticle?.time}
+                <strong>Time:</strong> {newsArticle?.parameters.time}
               </li>
               <li>
-                <strong>Vehicle:</strong> {newsArticle?.vehicle}
+                <strong>Vehicle:</strong> {newsArticle?.parameters.vehicles}
               </li>
               <li>
-                <strong>Dead:</strong> {newsArticle?.dead}
+                <strong>Dead:</strong> {newsArticle?.parameters.dead}
               </li>
               <li>
-                <strong>Injured:</strong> {newsArticle?.injured}
+                <strong>Injured:</strong> {newsArticle?.parameters.injured}
               </li>
             </ul>
           </div>

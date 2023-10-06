@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
-from ..controllers.news import fetch_all_news, create_news
+from ..controllers.news import fetch_all_news, create_news, get_news_by_id
 from ..controllers.dummynews import dummy_news, get_news_article
 from ..models.NewsArticle import NewsArticle
+from ..database.db import news_articles_collection
+from bson import ObjectId 
 
 router = APIRouter()
 
@@ -15,9 +17,8 @@ def get_dummy_news():
 
 
 @router.get("/news-article/{article_id}")
-def get_single_news(article_id:int):
-    print("article_id")
-    # return get_news_article(article_id)
+async def get_single_news(article_id:str):
+    return await get_news_by_id(article_id)
 
 
 @router.get("/news-article/")

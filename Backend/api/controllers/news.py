@@ -1,7 +1,9 @@
 import requests
+from fastapi import HTTPException
 from bs4 import BeautifulSoup
 from ..database.db import news_articles_collection
 from ..models.NewsArticle import NewsArticle
+from bson import ObjectId 
 
 
 url1 = 'https://en.prothomalo.com/'
@@ -38,17 +40,31 @@ def scrape_all():
     return scraped_articles
 
 
-
 async def fetch_all_news(): 
     news = []
     cursor = news_articles_collection.find({})
+    print(cursor)
     async for document in cursor:
-        news.append(NewsArticle(**document))
+        document['_id'] = str(document['_id'])
+        news.append(document)
     return news
+
+
+async def get_news_by_id(news_id: str):
+    try:
+        news_object_id = ObjectId(news_id)
+        news_item = await news_articles_collection.find_one({"_id": news_object_id})
+        if news_item:
+            news_item["_id"] = str(news_item["_id"])
+            return news_item
+        else:
+            raise HTTPException(status_code=404, detail="News not found")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Invalid ObjectId format")
+
 
 async def create_news(news):
     document = news
     result = await news_articles_collection.insert_one(document)
-    # document["ss"] = str(result.inserted_id)
     print(document)
     return document
