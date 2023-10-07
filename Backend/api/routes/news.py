@@ -41,7 +41,7 @@ async def create_news_article(news_article: NewsArticle):
              )
         # print(new_params)
         news_article.parameters = new_params
-        print(news_article) 
+    print(news_article) 
     
     response = await create_news(news_article)
     print({"response":response})

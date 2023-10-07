@@ -43,7 +43,6 @@ def scrape_all():
 async def fetch_all_news(): 
     news = []
     cursor = news_articles_collection.find({})
-    print(cursor)
     async for document in cursor:
         document['_id'] = str(document['_id'])
         news.append(document)
@@ -64,8 +63,9 @@ async def get_news_by_id(news_id: str):
         raise HTTPException(status_code=400, detail="Invalid ObjectId format")
 
 
-async def create_news(news:news_articles_collectionnm ):
+async def create_news(news: NewsArticle):
     document = news
+    print(document)
     result = await news_articles_collection.insert_one(document.dict())
     print(document)
     return document
