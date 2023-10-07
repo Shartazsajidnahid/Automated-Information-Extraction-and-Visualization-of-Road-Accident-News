@@ -9,8 +9,7 @@ function Allnews() {
 
   useEffect(() => {
     axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
-      setNews(response.data);
-      
+      setNews(response.data);  
     });
   }, [apiBaseUrl]);
 
@@ -21,8 +20,6 @@ function Allnews() {
     }
     return text;
   };
-  
-  
 
   return (
     <div>

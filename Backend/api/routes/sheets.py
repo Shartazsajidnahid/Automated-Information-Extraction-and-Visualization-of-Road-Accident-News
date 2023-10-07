@@ -1,11 +1,15 @@
 from fastapi import APIRouter
 import openpyxl
+import os
+import time
 
 router = APIRouter()
+SAVE_DIR = "excel_files"
 
 @router.get("/save")
 def save_sheet():
     print("Hello i am sheet")
+    file_name = f"news_data_{time.time()}.xlsx"
     news_data = [
     {
         "row_number": 1,
@@ -59,9 +63,15 @@ def save_sheet():
         ws.cell(row=news_item["row_number"], column=5).value = news_item["injured"]
         ws.cell(row=news_item["row_number"], column=6).value = news_item["newslink"]
 
+    if not os.path.exists(SAVE_DIR):
+        os.makedirs(SAVE_DIR)
+
+    # Save the Excel workbook with the generated file name
+    file_path = os.path.join(SAVE_DIR, file_name)
     # Save the Excel workbook
     wb.save("news_data.xlsx")
 
+    return {"fileUrl": file_path}
 
 
 
