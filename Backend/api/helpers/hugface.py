@@ -24,7 +24,7 @@ injured = "দুর্ঘটনায় আহত কারা?"
 
 
 
-def find_params(news):
+async def find_params(news):
 	result = {
 		'location': find_location(news)['answer'],
 		'time': find_time(news)['answer'],

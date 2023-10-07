@@ -56,6 +56,7 @@ async def get_news_by_id(news_id: str):
         news_item = await news_articles_collection.find_one({"_id": news_object_id})
         if news_item:
             news_item["_id"] = str(news_item["_id"])
+            # print(news_item)
             return news_item
         else:
             raise HTTPException(status_code=404, detail="News not found")
@@ -63,8 +64,8 @@ async def get_news_by_id(news_id: str):
         raise HTTPException(status_code=400, detail="Invalid ObjectId format")
 
 
-async def create_news(news):
+async def create_news(news:news_articles_collectionnm ):
     document = news
-    result = await news_articles_collection.insert_one(document)
+    result = await news_articles_collection.insert_one(document.dict())
     print(document)
     return document
