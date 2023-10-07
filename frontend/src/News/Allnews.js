@@ -21,6 +21,8 @@ function Allnews() {
     }
     return text;
   };
+  
+  
 
   return (
     <div>

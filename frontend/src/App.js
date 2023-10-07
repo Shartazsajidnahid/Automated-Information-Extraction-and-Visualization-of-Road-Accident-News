@@ -5,23 +5,25 @@ import "./App.css";
 import Allnews from "./News/Allnews";
 import NewsArticleDetails from "./News/NewsArticleDetails";
 import Demo from "./Demo";
-
+import Navbar from "./Navbar";
 
 // import Newsdetail from "./News/Newsdetail";
-
 
 function App() {
   return (
     // <Demo></Demo>
-    <Router>
-      <div className="container">
-        <Routes>
-          <Route path="/allnews" element={<Allnews />} />
-          <Route path="/" element={<Allnews />} />
-          <Route path="/news-article/:id" element={<NewsArticleDetails />} />
-        </Routes>
-      </div>
-    </Router>
+    <>
+      <Router>
+        <Navbar></Navbar>
+        <div className="container">
+          <Routes>
+            <Route path="/allnews" element={<Allnews />} />
+            <Route path="/" element={<Allnews />} />
+            <Route path="/news-article/:id" element={<NewsArticleDetails />} />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 }
 
