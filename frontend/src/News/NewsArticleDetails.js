@@ -32,7 +32,7 @@ const NewsArticleDetails = () => {
       <div className="container">
         <div className="card mb-3">
           <div className="card-body">
-            <h5 className="card-title">{newsArticle?.title}</h5>
+            <h3 className="card-title text-center mb-4">{newsArticle?.title}</h3>
             <p className="card-text">{newsArticle?.content}</p>
           </div>
         </div>
