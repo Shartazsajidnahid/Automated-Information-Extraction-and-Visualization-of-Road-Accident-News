@@ -1,69 +1,72 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import ExcelJS from "exceljs";
+
 
 function Navbar() {
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-  const [newsData, setNewsData] = useState([]);
+  // const [newsData, setNewsData] = useState([]);
+
+  async function exportNewsDataToExcel(newsData) {
+    // Create a new Excel file
+    const workbook = new ExcelJS.Workbook();
+  
+    // Add a new worksheet to the Excel file
+    const worksheet = workbook.addWorksheet("News Data");
+  
+    // Set the column headers for the worksheet
+    worksheet.columns = [
+
+      { header: "Title" },
+      { header: "Content" },
+      { header: "Link" },
+      { header: "Location" },
+      { header: "Time" },
+      { header: "Vehicles" },
+      { header: "Dead" },
+      { header: "Injured" },
+      { header: "Source" },
+    ];
+  
+    // Iterate over the news data array and add each object to the worksheet
+    newsData.forEach((newsItem) => {
+      const row = worksheet.addRow();
+      // Set the cell values for each column in the worksheet
+      row.getCell(1).value = newsItem.title;
+      row.getCell(2).value = newsItem.content;
+      row.getCell(3).value = newsItem.link;
+      row.getCell(4).value = newsItem.parameters.location;
+      row.getCell(5).value = newsItem.parameters.time;
+      row.getCell(6).value = newsItem.parameters.vehicles;
+      row.getCell(7).value = newsItem.parameters.dead;
+      row.getCell(8).value = newsItem.parameters.injured;
+      row.getCell(9).value = newsItem.source;
+    });
+  
+    // Save the Excel file to the user's browser
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url = URL.createObjectURL(blob);
+  
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = "news-data.xlsx";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
   function handleDownloadExcel() {
     try {
         
       axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
-        setNewsData(response.data);
+        if(response.data){
+          // console.log(response.data);
+          exportNewsDataToExcel(response.data);
+
+        }
       });
-
-      console.log("hehah");
-      console.log(newsData);
-      // Create a new Excel workbook
-      const xlsx = require("xlsx");
-      const wb = xlsx.utils.book_new();
-      const ws = xlsx.utils.json_to_sheet([]);
-
-      // Add column headers
-      const columnHeaders = [
-        "title",
-        "content",
-        "source",
-        "link",
-        "location",
-        "time",
-        "vehicles",
-        "dead",
-        "injured",
-      ];
-      xlsx.utils.sheet_add_aoa(ws, [columnHeaders], { origin: -1 }); // -1 means at the beginning
-
-      // Loop through the data and add rows
-      newsData.forEach((newsItem) => {
-        const rowData = [
-          newsItem.title,
-          newsItem.content,
-          newsItem.source,
-          newsItem.link,
-          newsItem.parameters.location,
-          newsItem.parameters.time,
-          newsItem.parameters.vehicles,
-          newsItem.parameters.dead,
-          newsItem.parameters.injured,
-        ];
-        xlsx.utils.sheet_add_aoa(ws, [rowData], { origin: -1 }); // -1 means at the beginning
-      });
-
-      // Add the worksheet to the workbook
-      xlsx.utils.book_append_sheet(wb, ws, "News Data");
-
-      // Generate a Blob containing the Excel data
-      const blob = xlsx.write(wb, { bookType: "xlsx", type: "blob" });
-
-      // Create a URL for the Blob and trigger the download
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "news_data.xlsx";
-      a.click();
-
-      // Clean up the URL object
-      window.URL.revokeObjectURL(url);
+      
     } catch (error) {
       console.error("Error downloading Excel file:", error);
     }
