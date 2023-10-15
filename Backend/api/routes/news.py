@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from ..controllers.news import fetch_all_news, create_news, get_news_by_id
+from ..controllers.news import fetch_all_news, create_news, get_news_by_id, fetch_latest_news
 from ..controllers.dummynews import dummy_news, get_news_article
 from ..models.NewsArticle import NewsArticle, Parameter
 from ..database.db import news_articles_collection
@@ -26,6 +26,12 @@ async def get_single_news(article_id:str):
 async def get_allnews():
     response = await fetch_all_news()
     return response
+
+@router.get("/latest-news/")
+async def get_latest_news():
+    response = await fetch_latest_news()
+    return response
+
 
 @router.post("/news_article/")
 async def create_news_article(news_article: NewsArticle):

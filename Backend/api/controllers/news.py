@@ -48,6 +48,15 @@ async def fetch_all_news():
         news.append(document)
     return news
 
+async def fetch_latest_news(): 
+    news = []
+    cursor = news_articles_collection.find({})
+    async for document in cursor:
+        document['_id'] = str(document['_id'])
+        news.append(document)
+    return news
+
+
 
 async def get_news_by_id(news_id: str):
     try:
