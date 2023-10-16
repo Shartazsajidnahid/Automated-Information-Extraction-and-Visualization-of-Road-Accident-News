@@ -95,14 +95,14 @@ function Navbar() {
             <li className="nav-item">
               <Link
                 to="/allnews"
-                className="nav-link active"
+                className="nav-link"
                 aria-current="page"
               >
                 All news
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link"></Link>
+              <Link className="nav-link" to="/selectChartType">Visualize</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link disabled"></Link>

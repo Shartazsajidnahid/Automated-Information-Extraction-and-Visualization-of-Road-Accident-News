@@ -15,7 +15,7 @@ function LatestNews({ latestNews }) {
         {latestNews.map((newsItem) => (
           <div className="card ">
             <div className="card-body">
-              <h5 className="card-title text-white bg-secondary">
+              <h5 className="card-title text-white bg-dark">
                 {newsItem?.title}
               </h5>
               <p className="card-text">
