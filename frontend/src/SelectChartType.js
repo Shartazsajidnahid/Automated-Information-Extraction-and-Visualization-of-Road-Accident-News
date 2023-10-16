@@ -1,38 +1,75 @@
 import React, { useState } from "react";
-import { Bar, Pie } from "react-chartjs-2";
+import { Button, Form, Container, Row, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
-const data = [
-  { vehicle_type: "motorcycle", count: 10 },
-  { vehicle_type: "bike", count: 4 },
-];
-
-const SelectChartType = () => {
+function ChartGenerator() {
   const [chartType, setChartType] = useState("bar");
+  const [generateChart, setGenerateChart] = useState(false);
+  const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    setChartType(e.target.value);
-  };
-
-  const renderChart = () => {
-    switch (chartType) {
-      case "bar":
-        return <Bar data={data} />;
-      case "pie":
-        return <Pie data={data} />;
-      default:
-        return null;
-    }
+  const handleGenerateChart = () => {
+    setGenerateChart(true);
   };
 
   return (
-    <div>
-      <select value={chartType} onChange={handleChange}>
-        <option value="bar">Bar Chart</option>
-        <option value="pie">Pie Chart</option>
-      </select>
-      {renderChart()}
-    </div>
-  );
-};
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col md={6} className="bg-light p-4 rounded shadow">
+          <h1 className="text-center mb-4">Select Chart Type</h1>
+          <Form>
+            <Form.Group controlId="chartType">
+              <Form.Check
+                type="radio"
+                label="Bar Chart"
+                id="bar"
+                checked={chartType === "bar"}
+                onChange={() => setChartType("bar")}
+              />
+              <Form.Check
+                type="radio"
+                label="Pie Chart"
+                id="pie"
+                checked={chartType === "pie"}
+                onChange={() => setChartType("pie")}
+              />
+              <Form.Check
+                type="radio"
+                label="Line Chart"
+                id="line"
+                checked={chartType === "line"}
+                onChange={() => setChartType("line")}
+              />
+              <Form.Check
+                type="radio"
+                label="Histogram"
+                id="histogram"
+                checked={chartType === "histogram"}
+                onChange={() => setChartType("histogram")}
+              />
+            </Form.Group>
 
-export default SelectChartType;
+            <div className="text-center">
+              {/* <Link
+                to={{
+                  pathname: "/viewChart",
+                  state: { chartTypes: chartType },
+                }}
+              >
+              </Link> */}
+              <Button
+                variant="primary"
+                onClick={() => {
+                  navigate("/viewChart", {replace:true, state:{chartType}});
+                }}
+              >
+                Generate Chart
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default ChartGenerator;

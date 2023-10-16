@@ -2,10 +2,11 @@ import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Chart from "chart.js/auto";
 
-function ViewChart() {
+function ViewChart(props){
   const location = useLocation();
+  // console.log(location.state.chartType)
   // const chartType = location.state.chartType;
-  const chartType = "pie"
+  const chartType = location.state.chartType
   const chartRef = useRef(null);
   let myChart = null;
 
