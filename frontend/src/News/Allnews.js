@@ -21,7 +21,6 @@ function Allnews() {
     });
   }, [apiBaseUrl]);
 
-
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength) + "...";
@@ -29,16 +28,35 @@ function Allnews() {
     return text;
   };
 
-  return (
-    <div>
+  const keywords = [
+    "Technology",
+    "Sports",
+    "Politics",
+    "Entertainment",
+    "Science",
+  ];
 
+  return (
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-8">
-          <h1 className="mt-4 text-center">News Articles</h1>
+        <div className="col-md-2 mt-4 text-center">
+          <h3 mt-4 text-center>Keywords</h3>
+          <hr />
+          <ul className="list-group">
+            {keywords.map((keyword) => (
+              <li key={keyword} className="list-group-item">
+                <span>{keyword}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="col-md-7 border-start">
+          <h3 className="mt-4 text-center">News Articles</h3>
+          <hr />
           <div className="row">
             {news.map((newsItem, index) => (
               <div className="col-md-4 mb-4" key={index}>
-                <div className="card ">
+                <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">
                       <>{newsItem?.title}</>
@@ -48,18 +66,17 @@ function Allnews() {
                     </p>
                     <Link
                       to={`/news-article/${newsItem?._id}`}
-                      className="btn btn-sm btn-warning"
+                      className="btn btn-sm btn-secondary"
                     >
                       Read More
                     </Link>
-                    {/* <Link to={{ pathname: `/news/${index}`, state: { newsItem: newsItem } }}>Read More</Link> Use Link */}
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="col-md-4 border-start">
+        <div className="col-md-3 border-start">
           <LatestNews latestNews={latestNews} />
         </div>
       </div>

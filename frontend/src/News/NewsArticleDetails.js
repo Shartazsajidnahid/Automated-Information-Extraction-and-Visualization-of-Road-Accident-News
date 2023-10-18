@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom";
 
 const NewsArticleDetails = () => {
   let params = useParams();
-  // console.log(params)
   const articleId = params.id;
-  // console.log(articleId)
   const [newsArticle, setNewsArticle] = useState(null);
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -16,7 +14,6 @@ const NewsArticleDetails = () => {
       .then((response) => {
         setNewsArticle(response.data);
       });
-    // setNewsArticle(n1);
   }, [articleId, apiBaseUrl]);
 
   if (!newsArticle) {
@@ -24,42 +21,36 @@ const NewsArticleDetails = () => {
   }
 
   return (
-    <>
-      <div className="navbar">
-        <div className="navbar-brand">News Articles</div>
-      </div>
-
-      <div className="container">
-        <div className="card mb-3">
-          <div className="card-body">
-            <h3 className="card-title text-center mb-4">{newsArticle?.title}</h3>
-            <p className="card-text">{newsArticle?.content}</p>
-          </div>
-        </div>
-
-        <div className="card">
-          <div className="card-body">
-            <ul>
-              <li>
-                <strong>Location:</strong> {newsArticle?.parameters.location}
-              </li>
-              <li>
-                <strong>Time:</strong> {newsArticle?.parameters.time}
-              </li>
-              <li>
-                <strong>Vehicle:</strong> {newsArticle?.parameters.vehicles}
-              </li>
-              <li>
-                <strong>Dead:</strong> {newsArticle?.parameters.dead}
-              </li>
-              <li>
-                <strong>Injured:</strong> {newsArticle?.parameters.injured}
-              </li>
-            </ul>
-          </div>
+    <div className="container mt-3">
+      <div className="card mb-3">
+        <div className="card-body">
+          <h3 className="card-title text-center">{newsArticle?.title}</h3>
+          <p className="card-text">{newsArticle?.content}</p>
         </div>
       </div>
-    </>
+
+      <div className="card">
+        <div className="card-body">
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">
+              <strong>Location:</strong> {newsArticle?.parameters.location}
+            </li>
+            <li className="list-group-item">
+              <strong>Time:</strong> {newsArticle?.parameters.time}
+            </li>
+            <li className="list-group-item">
+              <strong>Vehicle:</strong> {newsArticle?.parameters.vehicles}
+            </li>
+            <li className="list-group-item">
+              <strong>Dead:</strong> {newsArticle?.parameters.dead}
+            </li>
+            <li className="list-group-item">
+              <strong>Injured:</strong> {newsArticle?.parameters.injured}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -17,7 +17,7 @@ function App() {
     <>
       <Router>
         <Navbar></Navbar>
-        <div className="container">
+        <div>
           <Routes>
             <Route path="/allnews" element={<Allnews />} />
             <Route path="/" element={<Allnews />} />

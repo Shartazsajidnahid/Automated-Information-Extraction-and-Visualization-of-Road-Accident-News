@@ -10,7 +10,7 @@ function LatestNews({ latestNews }) {
   };
   return (
     <div>
-      <h2 className="text-center">Top 5 Latest News</h2>
+      <h3 className="text-center mt-4">Top 5 Latest News</h3>
       <ul>
         {latestNews.map((newsItem) => (
           <div className="card ">
@@ -23,7 +23,7 @@ function LatestNews({ latestNews }) {
               </p>
               <Link
                 to={`/news-article/${newsItem?._id}`}
-                className="btn btn-sm btn-warning"
+                className="btn btn-sm btn-secondary"
               >
                 Read More
               </Link>
