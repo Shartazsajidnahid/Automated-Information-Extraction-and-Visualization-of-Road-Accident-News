@@ -11,6 +11,7 @@ function LatestNews({ latestNews }) {
   return (
     <div>
       <h3 className="text-center mt-4">Top 5 Latest News</h3>
+      <hr></hr>
       <ul>
         {latestNews.map((newsItem) => (
           <div className="card ">
