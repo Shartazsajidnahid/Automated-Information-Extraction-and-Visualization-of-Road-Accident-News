@@ -32,7 +32,6 @@ async def find_params(news):
 		'dead': find_dead(news)['answer'],
 		'injured': find_injured(news)['answer']
 	}
-
 	return result
 
 

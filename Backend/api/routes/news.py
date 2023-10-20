@@ -4,6 +4,7 @@ from ..controllers.dummynews import dummy_news, get_news_article
 from ..models.NewsArticle import NewsArticle, Parameter
 from ..database.db import news_articles_collection
 from ..helpers.hugface import find_params
+from ..helpers.bangla_transform import find_parameters
 from bson import ObjectId 
 
 router = APIRouter()
@@ -36,7 +37,7 @@ async def get_latest_news():
 @router.post("/news_article/")
 async def create_news_article(news_article: NewsArticle):
 
-    parameters = await find_params(news_article.content)
+    parameters = await find_parameters(news_article.content)
     if parameters:
         new_params = Parameter(
             location=parameters["location"], 
