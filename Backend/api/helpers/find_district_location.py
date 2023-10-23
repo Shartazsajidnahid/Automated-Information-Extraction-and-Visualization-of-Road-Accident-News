@@ -14,21 +14,35 @@ class BangladeshStructure:
     
 def find_location_in_bangladesh(location_name):
     found = False
-    results = []
 
     for division_name, districts in bangladesh.get_structure().items():
-        # Check if the location is a district
-        if location_name in districts:
-            results.append((location_name, "district", division_name))
-            found = True
         for district_name, subdistricts in districts.items():
             if location_name in subdistricts:
-                results.append((location_name, district_name, division_name))
+                result = {
+                    "Subdistrict": location_name,
+                    "District": district_name,
+                    "Division": division_name
+                }
                 found = True
+                return result
+        # Check if the location is a district
+        if location_name in districts:
+            result = {
+                "Subdistrict": "",
+                "District": location_name,
+                "Division": division_name
+            }
+            found = True
+            return result
 
     if not found:
-        return f"{location_name} is not found in Bangladesh."
-    return results
+        result = {
+                "Subdistrict": "",
+                "District": "",
+                "Division": ""
+            }
+    return result
+
 
 # Create an instance of the BangladeshStructure class and populate it with data
 bangladesh = BangladeshStructure()
@@ -152,10 +166,12 @@ bangladesh.add_division("ময়মনসিংহ")
 bangladesh.add_districts("ময়মনসিংহ", mymensingh_districts)
 
 # Example usage
-location_to_find = "মেলান্দহ"
+location_to_find = "সাদুল্লাপুর"
 results = find_location_in_bangladesh(location_to_find)
-if isinstance(results, str):
-    print(results)
-else:
-    for subdistrict, district, division in results:
-        print(f"{subdistrict} is a subdistrict in {district}, {division}.")
+print(results)
+
+# if isinstance(results, str):
+#     print(results)
+# else:
+#     for subdistrict, district, division in results:
+#         print(f"{subdistrict} is a subdistrict in {district}, {division}.")
