@@ -56,7 +56,7 @@ function Allnews() {
           <div className="row">
             {news.map((newsItem, index) => (
               <div className="col-md-4 mb-4" key={index}>
-                <div className="card">
+                <div className="card bg-light p-4 rounded shadow">
                   <div className="card-body">
                     <h5 className="card-title">
                       <>{newsItem?.title}</>

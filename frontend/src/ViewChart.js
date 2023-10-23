@@ -15,6 +15,7 @@ function ViewChart(props){
       const data = [
         { vehicle_type: "motorcycle", count: 10 },
         { vehicle_type: "bike", count: 4 },
+        { vehicle_type: "van", count: 8 },
       ];
 
       const labels = data.map((item) => item.vehicle_type);
