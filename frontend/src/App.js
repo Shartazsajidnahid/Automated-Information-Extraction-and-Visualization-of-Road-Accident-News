@@ -8,6 +8,7 @@ import Demo from "./Demo";
 import Navbar from "./Navbar";
 import SelectChartType from "./SelectChartType";
 import ViewChart from "./ViewChart";
+import SearchedNews from "./News/SearchedNews";
 
 // import Newsdetail from "./News/Newsdetail";
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/allnews" element={<Allnews />} />
             <Route path="/" element={<Allnews />} />
             <Route path="/news-article/:id" element={<NewsArticleDetails />} />
+            <Route path="/searchednews" element={<SearchedNews />} />
 
             <Route path="/selectChartType" element={<SelectChartType />} />
             <Route path="/viewChart" element={<ViewChart />} />
