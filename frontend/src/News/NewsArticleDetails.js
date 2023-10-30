@@ -36,6 +36,15 @@ const NewsArticleDetails = () => {
               <strong>Location:</strong> {newsArticle?.parameters.location}
             </li>
             <li className="list-group-item">
+              <strong>Division:</strong> {newsArticle?.parameters.division}
+            </li>
+            <li className="list-group-item">
+              <strong>District:</strong> {newsArticle?.parameters.district}
+            </li>
+            <li className="list-group-item">
+              <strong>Subdistrict:</strong> {newsArticle?.parameters.subdistrict}
+            </li>
+            <li className="list-group-item">
               <strong>Time:</strong> {newsArticle?.parameters.time}
             </li>
             <li className="list-group-item">

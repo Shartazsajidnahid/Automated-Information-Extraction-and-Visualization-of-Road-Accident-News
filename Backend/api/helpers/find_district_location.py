@@ -1,3 +1,6 @@
+import banglanltk as bn
+from ..helpers.little_stem import bengali_stem
+
 class BangladeshStructure:
     def __init__(self):
         self.data = {}
@@ -11,38 +14,7 @@ class BangladeshStructure:
 
     def get_structure(self):
         return self.data
-    
-def find_location_in_bangladesh(location_name):
-    found = False
-
-    for division_name, districts in bangladesh.get_structure().items():
-        for district_name, subdistricts in districts.items():
-            if location_name in subdistricts:
-                result = {
-                    "Subdistrict": location_name,
-                    "District": district_name,
-                    "Division": division_name
-                }
-                found = True
-                return result
-        # Check if the location is a district
-        if location_name in districts:
-            result = {
-                "Subdistrict": "",
-                "District": location_name,
-                "Division": division_name
-            }
-            found = True
-            return result
-
-    if not found:
-        result = {
-                "Subdistrict": "",
-                "District": "",
-                "Division": ""
-            }
-    return result
-
+ 
 
 # Create an instance of the BangladeshStructure class and populate it with data
 bangladesh = BangladeshStructure()
@@ -165,10 +137,71 @@ mymensingh_districts = {
 bangladesh.add_division("ময়মনসিংহ")
 bangladesh.add_districts("ময়মনসিংহ", mymensingh_districts)
 
+
+   
+def find_location_in_bangladesh(location_name):
+    found = False
+
+    for division_name, districts in bangladesh.get_structure().items():
+        for district_name, subdistricts in districts.items():
+            if location_name in subdistricts:
+                result = {
+                    "subdistrict": location_name,
+                    "district": district_name,
+                    "division": division_name,
+                    "found": "found"
+                }
+                found = True
+                return result
+        # Check if the location is a district
+        if location_name in districts:
+            result = {
+                "subdistrict": "",
+                "district": location_name,
+                "division": division_name,
+                "found": "found"
+            }
+            found = True
+            return result
+
+    if not found:
+        result = {
+                "subdistrict": "",
+                "district": "",
+                "division": "",
+                "found": "notfound"
+            }
+    return result
+
+def locate(location_str):
+    final_loc = {
+                "subdistrict": "",
+                "district": "",
+                "division": "",
+                "found": "notfound"
+            }
+    for w in bn.word_tokenize(location_str):
+        stemmedWord = bengali_stem(bn.stemmer(w))
+        location = find_location_in_bangladesh(stemmedWord)
+        if(location["found"]=="found"):
+            if(location["subdistrict"]!=""):
+                final_loc = location
+                break
+            else: 
+                final_loc = location
+                continue
+    return final_loc
+    
+
+
+
+
 # Example usage
-location_to_find = "সাদুল্লাপুর"
-results = find_location_in_bangladesh(location_to_find)
-print(results)
+location_str = "চাঁদপুরের মতলব উত্তর উপজেলায়"
+# print(locate(location_str))
+location_to_find = "হরিরামপুর"
+# results = find_location_in_bangladesh(location_to_find)
+# print(results)
 
 # if isinstance(results, str):
 #     print(results)

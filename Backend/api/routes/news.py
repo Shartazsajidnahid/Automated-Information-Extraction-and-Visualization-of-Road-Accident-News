@@ -5,6 +5,7 @@ from ..models.NewsArticle import NewsArticle, Parameter
 from ..database.db import news_articles_collection
 from ..helpers.hugface import find_params
 from ..helpers.bangla_transform import find_parameters
+from ..helpers.find_district_location import locate
 from bson import ObjectId 
 
 router = APIRouter()
@@ -39,8 +40,12 @@ async def create_news_article(news_article: NewsArticle):
 
     parameters = await find_parameters(news_article.content)
     if parameters:
+        districts = locate(parameters["location"])
         new_params = Parameter(
             location=parameters["location"], 
+            division = districts["division"],
+            district = districts["district"],
+            subdistrict = districts["subdistrict"],
             time = parameters["time"],
             vehicles = parameters["vehicle"],
             dead = parameters["dead"],
@@ -48,7 +53,7 @@ async def create_news_article(news_article: NewsArticle):
              )
         # print(new_params)
         news_article.parameters = new_params
-    print(news_article) 
+    # print(news_article) 
     
     response = await create_news(news_article)
     print({"response":response})

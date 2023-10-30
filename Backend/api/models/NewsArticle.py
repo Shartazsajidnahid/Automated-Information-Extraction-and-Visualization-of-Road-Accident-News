@@ -2,6 +2,9 @@ from pydantic import BaseModel
 
 class Parameter(BaseModel):
     location: str = "Example Location"
+    division: str = "Division"
+    district: str = "District"
+    subdistrict: str = "Subdistrict"
     time: str = "Example Time"
     vehicles: str = "Example Vehicles"
     dead: str = "Example Dead"
