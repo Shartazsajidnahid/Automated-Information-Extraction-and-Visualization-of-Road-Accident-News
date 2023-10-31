@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LatestNews from "./LatestNews";
+import Leftbar from "./Leftbar";
 
 function SearchedNews() {
   const [news, setNews] = useState([]);
   const [latestNews, setLatestNews] = useState([]);
+  const location = useLocation();
+
+  const {keyword, division} = location.state;
 
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     // Fetch all news
-    axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
+    console.log("Donn: ", keyword);
+    axios.get(`${apiBaseUrl}/news/news_by_division?division=${keyword}`).then((response) => {
       setNews(response.data);
     });
 
-    // Fetch the top 5 latest news
-    axios.get(`${apiBaseUrl}/news/latest-news/`).then((response) => {
-      setLatestNews(response.data);
-    });
   }, [apiBaseUrl]);
 
   const truncateText = (text, maxLength) => {
@@ -28,27 +29,11 @@ function SearchedNews() {
     return text;
   };
 
-  const keywords = [
-    "Technology",
-    "Sports",
-    "Politics",
-    "Entertainment",
-    "Science",
-  ];
-
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2 mt-4 text-center">
-          <h3 mt-4 text-center>Keywords</h3>
-          <hr />
-          <ul className="list-group">
-            {keywords.map((keyword) => (
-              <li key={keyword} className="list-group-item">
-                <span>{keyword}</span>
-              </li>
-            ))}
-          </ul>
+          <Leftbar></Leftbar>
         </div>
         <div className="col-md-7 border-start">
           <h3 className="mt-4 text-center">Search Results: News Articles</h3>

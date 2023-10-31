@@ -7,7 +7,6 @@ from api.routes.sheets import router as sheets
 
 app = FastAPI()
 
-
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
@@ -16,7 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 app.include_router(news, prefix="/news")
 app.include_router(demo, prefix="/demo")

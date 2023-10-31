@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LatestNews from "./LatestNews";
+import Leftbar from "./Leftbar";
 
 function Allnews() {
   const [news, setNews] = useState([]);
@@ -28,27 +29,25 @@ function Allnews() {
     return text;
   };
 
+  const tokeyword = (keyword) => {
+    console.log(keyword);
+  }
+
   const keywords = [
-    "Technology",
-    "Sports",
-    "Politics",
-    "Entertainment",
-    "Science",
+    "ঢাকা",
+    "চট্টগ্রাম",
+    "রাজশাহী",
+    "খুলনা",
+    "বরিশাল",
+    "ময়মনসিংহ",
+    "রংপুর"
   ];
 
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2 mt-4 text-center">
-          <h3 mt-4 text-center>Keywords</h3>
-          <hr />
-          <ul className="list-group">
-            {keywords.map((keyword) => (
-              <li key={keyword} className="list-group-item" style={{ cursor: "pointer" }}>
-                <span>{keyword}</span>
-              </li>
-            ))}
-          </ul>
+          <Leftbar></Leftbar>
         </div>
         <div className="col-md-7 border-start">
           <h3 className="mt-4 text-center">News Articles</h3>
