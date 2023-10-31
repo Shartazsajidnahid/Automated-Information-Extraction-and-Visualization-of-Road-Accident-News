@@ -44,7 +44,7 @@ function Allnews() {
           <hr />
           <ul className="list-group">
             {keywords.map((keyword) => (
-              <li key={keyword} className="list-group-item">
+              <li key={keyword} className="list-group-item" style={{ cursor: "pointer" }}>
                 <span>{keyword}</span>
               </li>
             ))}
