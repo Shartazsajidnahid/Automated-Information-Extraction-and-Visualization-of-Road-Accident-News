@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class Parameter(BaseModel):
     location: str = "Example Location"
@@ -16,3 +17,4 @@ class NewsArticle(BaseModel):
     source: str
     link: str
     parameters: Parameter = Parameter()
+    timestamp: datetime = datetime.now()

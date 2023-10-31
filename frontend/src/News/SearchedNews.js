@@ -68,4 +68,4 @@ function SearchedNews() {
   );
 }
 
-export default SearchedNews;
+export default SearchedNews; 

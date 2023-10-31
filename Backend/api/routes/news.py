@@ -6,7 +6,8 @@ from ..database.db import news_articles_collection
 from ..helpers.hugface import find_params
 from ..helpers.bangla_transform import find_parameters
 from ..helpers.find_district_location import locate
-from bson import ObjectId 
+from datetime import datetime
+
 
 router = APIRouter()
 
@@ -55,6 +56,7 @@ async def create_news_article(news_article: NewsArticle):
         news_article.parameters = new_params
     # print(news_article) 
     
+    news_article.timestamp=datetime.now();
     response = await create_news(news_article)
     print({"response":response})
     if response:

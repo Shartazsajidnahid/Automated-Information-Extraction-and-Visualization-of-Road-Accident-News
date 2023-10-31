@@ -50,7 +50,7 @@ async def fetch_all_news():
 
 async def fetch_latest_news(): 
     news = []
-    cursor = news_articles_collection.find({})
+    cursor = news_articles_collection.find({}).sort("timestamp", -1).limit(5)
     async for document in cursor:
         document['_id'] = str(document['_id'])
         news.append(document)
