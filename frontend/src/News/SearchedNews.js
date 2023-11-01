@@ -15,12 +15,12 @@ function SearchedNews() {
 
   useEffect(() => {
     // Fetch all news
-    console.log("Donn: ", keyword);
+    if(division)
     axios.get(`${apiBaseUrl}/news/news_by_division?division=${keyword}`).then((response) => {
       setNews(response.data);
     });
 
-  }, [apiBaseUrl]);
+  }, [apiBaseUrl, keyword]);
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
