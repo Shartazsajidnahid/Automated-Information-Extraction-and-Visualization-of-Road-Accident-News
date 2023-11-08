@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 def bengali_stem(word):
     # Define a list of suffixes to remove
     suffixes = ["ের", "ে"]
