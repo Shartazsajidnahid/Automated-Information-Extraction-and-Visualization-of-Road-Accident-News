@@ -97,4 +97,3 @@ async def create_news(news_article: NewsArticle):
     print(news_article)
     return result, news_article
 
-fetch_all_news()
