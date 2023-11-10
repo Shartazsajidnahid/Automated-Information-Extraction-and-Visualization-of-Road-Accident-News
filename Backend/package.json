@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "react-router-dom": "^6.16.0"
+    "fastapi": "^0.0.8",
+    "react-router-dom": "^6.16.0",
+    "requests": "^0.3.0"
   }
 }

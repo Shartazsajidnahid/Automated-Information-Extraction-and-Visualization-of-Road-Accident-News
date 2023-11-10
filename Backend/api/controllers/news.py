@@ -2,14 +2,16 @@ import requests
 from fastapi import HTTPException
 from bs4 import BeautifulSoup
 from ..database.db import news_articles_collection
-from ..models.NewsArticle import NewsArticle
+from ..models.NewsArticle import NewsArticle, Parameter
 from bson import ObjectId 
-
+from ..helpers.bangla_transform import find_parameters
+from ..helpers.find_district_location import locate
+from datetime import datetime
 
 url1 = 'https://en.prothomalo.com/'
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
                     'AppleWebKit/537.11 (KHTML, like Gecko) '
-                    'Chrome/23.0.1271.64 Safari/537.11',
+                    'Chrome/23.0.1271.64 Safari/537 .11',
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                     'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
                     'Accept-Encoding': 'none',
@@ -72,9 +74,27 @@ async def get_news_by_id(news_id: str):
         raise HTTPException(status_code=400, detail="Invalid ObjectId format")
 
 
-async def create_news(news: NewsArticle):
-    document = news
-    print(document)
-    result = await news_articles_collection.insert_one(document.dict())
-    print(document)
-    return document
+async def create_news(news_article: NewsArticle):
+    parameters = await find_parameters(news_article.content)
+    if parameters:
+        districts = locate(parameters["location"])
+        new_params = Parameter(
+            location=parameters["location"], 
+            division = districts["division"],
+            district = districts["district"],
+            subdistrict = districts["subdistrict"],
+            time = parameters["time"],
+            vehicles = parameters["vehicle"],
+            dead = parameters["dead"],
+            injured = parameters["injured"]
+             )
+        # print(new_params)
+        news_article.parameters = new_params
+    # print(news_article) 
+    
+    news_article.timestamp=datetime.now();
+    result = await news_articles_collection.insert_one(news_article.dict())
+    print(news_article)
+    return result, news_article
+
+fetch_all_news()
