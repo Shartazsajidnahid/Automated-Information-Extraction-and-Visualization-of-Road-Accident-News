@@ -6,6 +6,7 @@ from ..models.NewsArticle import NewsArticle, Parameter
 from bson import ObjectId 
 from ..helpers.bangla_transform import find_parameters
 from ..helpers.find_district_location import locate
+from ..helpers import process_news_tokens
 from datetime import datetime
 
 url1 = 'https://en.prothomalo.com/'
@@ -76,24 +77,32 @@ async def get_news_by_id(news_id: str):
 
 async def create_news(news_article: NewsArticle):
     parameters = await find_parameters(news_article.content)
+
     if parameters:
         districts = locate(parameters["location"])
+        vehicle1, vehicle2, dow, tod = process_news_tokens.process_news(news_article.content, parameters["time"])
+        
         new_params = Parameter(
             location=parameters["location"], 
             division = districts["division"],
             district = districts["district"],
             subdistrict = districts["subdistrict"],
             time = parameters["time"],
-            vehicles = parameters["vehicle"],
+            dayofweek = dow,
+            timeofday = tod,
+            vehicle1 = vehicle1,
+            vehicle2 = vehicle2,
             dead = parameters["dead"],
             injured = parameters["injured"]
              )
         # print(new_params)
+        # print(vehicles)
         news_article.parameters = new_params
+    
     # print(news_article) 
     
     news_article.timestamp=datetime.now();
     result = await news_articles_collection.insert_one(news_article.dict())
-    print(news_article)
+    # print(news_article)
     return result, news_article
 

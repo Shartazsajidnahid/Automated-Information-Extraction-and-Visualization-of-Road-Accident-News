@@ -48,7 +48,16 @@ const NewsArticleDetails = () => {
               <strong>Time:</strong> {newsArticle?.parameters.time}
             </li>
             <li className="list-group-item">
-              <strong>Vehicle:</strong> {newsArticle?.parameters.vehicles}
+              <strong>Day of week:</strong> {newsArticle?.parameters.dayofweek}
+            </li>
+            <li className="list-group-item">
+              <strong>Time of Day:</strong> {newsArticle?.parameters.timeofday}
+            </li>
+            <li className="list-group-item">
+              <strong>Vehicle1:</strong> {newsArticle?.parameters.vehicle1}
+            </li>
+            <li className="list-group-item">
+              <strong>Vehicle2:</strong> {newsArticle?.parameters.vehicle2}
             </li>
             <li className="list-group-item">
               <strong>Dead:</strong> {newsArticle?.parameters.dead}

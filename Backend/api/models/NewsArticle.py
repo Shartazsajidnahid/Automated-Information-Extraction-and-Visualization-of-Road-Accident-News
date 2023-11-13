@@ -7,7 +7,10 @@ class Parameter(BaseModel):
     district: str = "District"
     subdistrict: str = "Subdistrict"
     time: str = "Example Time"
-    vehicles: str = "Example Vehicles"
+    dayofweek: str = ""
+    timeofday: str = ""
+    vehicle1: str = ""
+    vehicle2: str = ""
     dead: str = "Example Dead"
     injured: str = "Example Injured"
 
