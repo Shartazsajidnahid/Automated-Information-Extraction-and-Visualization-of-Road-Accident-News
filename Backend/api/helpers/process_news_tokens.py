@@ -37,9 +37,14 @@ def process_news(news, time_from_model):
     sentence_tokens = bn.sent_tokenize(news)
 
     vehicles = functions.get_vehicles(news)
-    if len(vehicles) == 2:
+
+    print(vehicles)
+    if len(vehicles) >= 2:
         vehicle1 = vehicles[0]
         vehicle2 = vehicles[1]
+    elif len(vehicles) ==1: 
+        vehicle1 = vehicles[0]
+        
     #get time from model_time
     get_time(time_from_model)
 

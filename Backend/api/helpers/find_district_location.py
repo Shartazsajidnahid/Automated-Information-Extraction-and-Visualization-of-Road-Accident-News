@@ -179,7 +179,7 @@ def locate(location_str):
                 "found": "notfound"
             }
     for w in bn.word_tokenize(location_str):
-        stemmedWord = bengali_stem(bn.stemmer(w))
+        stemmedWord = bengali_stem_er(bn.stemmer(w))
         location = find_location_in_bangladesh(stemmedWord)
         if(location["found"]=="found"):
             if(location["subdistrict"]!=""):

@@ -1,11 +1,12 @@
-import little_stem
+from ..helpers import little_stem
+# import little_stem
 
 bangla_days = ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার"]
 
 day_indicator = ["ভোর", "সকাল", "দুপুর", "বেলা", "বিকাল", "বিকেল"]
 night_indicator = ["রাত", "সন্ধ্যা"]
 
-vehicle_types = ["মোটরসাইকেল", "সাইকেল", "বাইক", "বাস", "ট্রাক", "কার", "প্রাইভেট কার", "অটোরিকশা", "রিকশা", "রিক্সা", "মিনি বাস", "ট্রেন", "স্কুটার", "গাড়ি", "মাইক্রোবাস", "স্কুটি", "স্কুটার", "মোটর বাইক", "হোণ্ডা"]
+vehicle_types = ["মোটরসাইকেল", "সাইকেল", "বাইক", "বাস", "ট্রাক", "কার", "প্রাইভেট কার", "অটোরিকশা", "রিকশা", "রিক্সা", "ট্রেন", "স্কুটার", "গাড়ি", "মাইক্রোবাস", "স্কুটি", "স্কুটার", "মোটর বাইক", "হোণ্ডা"]
 
 def get_week_day(sentence):
     for day in bangla_days:
@@ -37,7 +38,6 @@ def get_vehicles(news_article):
     # for vehicle_type in vehicle_types:
     #     if any(word.startswith(vehicle_type) for word in words):
     #         stemmed_w = little_stem.bengali_stem_ta(little_stem.bengali_stem_ra(word))
-
     #         vehicles_involved.append(vehicle_type)
             
     for vehicle_type in vehicle_types:
@@ -45,9 +45,13 @@ def get_vehicles(news_article):
 
     for word in matching_words: 
         stemmed_w = little_stem.bengali_stem_ta(little_stem.bengali_stem_er(word))
-        if stemmed_w in vehicle_types:
+        stemmed_w = stemmed_w.replace("চাপায়", "")
+        stemmed_w = little_stem.bengali_stem_ra(stemmed_w)
+        
+        if stemmed_w in vehicle_types and stemmed_w not in vehicles_involved:
             vehicles_involved.append(stemmed_w)
+
     return vehicles_involved
 
 
-# print(get_vehicles("আজ কোনো ট্রাকে বাসটি চলবে না "))
+# print(get_vehicles("ময়মনসিংহের তারাকান্দা কারের উপজেলার কাশিগঞ্জ বাজারে ট্রাকচাপায় সিএনজিচালিত অটোরিকশার তিনজন যাত্রী মারা গেছেন। ট্রেনটির"))
