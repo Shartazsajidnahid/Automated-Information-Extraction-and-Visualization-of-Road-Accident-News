@@ -1,5 +1,5 @@
 import banglanltk as bn
-from ..helpers.little_stem import bengali_stem
+from ..helpers.little_stem import bengali_stem_er
 
 class BangladeshStructure:
     def __init__(self):

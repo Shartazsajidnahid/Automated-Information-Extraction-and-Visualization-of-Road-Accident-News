@@ -1,3 +1,5 @@
+import little_stem
+
 bangla_days = ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার"]
 
 day_indicator = ["ভোর", "সকাল", "দুপুর", "বেলা", "বিকাল", "বিকেল"]
@@ -31,21 +33,21 @@ def get_dayornight(sentence):
 def get_vehicles(news_article):
     vehicles_involved = []
     words = news_article.split()
+    matching_words = []
+    # for vehicle_type in vehicle_types:
+    #     if any(word.startswith(vehicle_type) for word in words):
+    #         stemmed_w = little_stem.bengali_stem_ta(little_stem.bengali_stem_ra(word))
 
+    #         vehicles_involved.append(vehicle_type)
+            
     for vehicle_type in vehicle_types:
-        if any(word.startswith(vehicle_type) for word in words):
-            vehicles_involved.append(vehicle_type)
-    
+        matching_words.extend([word for word in words if word.startswith(vehicle_type)])
+
+    for word in matching_words: 
+        stemmed_w = little_stem.bengali_stem_ta(little_stem.bengali_stem_er(word))
+        if stemmed_w in vehicle_types:
+            vehicles_involved.append(stemmed_w)
     return vehicles_involved
 
-# def get_dayornight(sentence):
-    # if sentence.endswith("য়"):  # সন্ধ্যায়
-    #     sentence = sentence[:-1]
 
-    # if re.search(day_pattern, sentence):
-    #     return {"result": True, "tod": "দিন"}
-
-    # if re.search(night_pattern, sentence):
-    #     return {"result": True, "tod": "রাত"}
-
-    # return {"result": False, "tod": ""}
+# print(get_vehicles("আজ কোনো ট্রাকে বাসটি চলবে না "))
