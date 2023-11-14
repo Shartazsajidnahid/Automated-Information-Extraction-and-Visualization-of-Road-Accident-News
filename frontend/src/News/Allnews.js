@@ -98,34 +98,46 @@ function Allnews() {
             {filtersOpen && (
               <div className="card-body">
                 <div className="filter-bar row g-3">
-                  <div className="col-md-4">
-                    <label htmlFor="division" className="form-label">
+                  <div className="col-md-4 form-group d-flex align-items-center">
+                    <label
+                      htmlFor="division"
+                      className="form-label me-2 fw-bold text-secondary small"
+                    >
                       Division:
                     </label>
                     <select
                       id="division"
                       name="division"
-                      className="form-select"
+                      className="form-select-sm"
                       value={filters.division}
                       onChange={handleDivisionChange}
                     >
-                      <option value="">Select Division</option>
+                      <option value="">
+                        <small>Select Division</small>
+                      </option>
                       {Object.keys(division_districts).map((division) => (
-                        <option key={division} value={division}>
+                        <option
+                          key={division}
+                          value={division}
+                          className="small"
+                        >
                           {division}
                         </option>
                       ))}
                     </select>
                   </div>
 
-                  <div className="col-md-4">
-                    <label htmlFor="district" className="form-label">
+                  <div className="col-md-4 form-group d-flex align-items-center">
+                    <label
+                      htmlFor="district"
+                      className="form-label me-2  fw-bold text-secondary small"
+                    >
                       District:
                     </label>
                     <select
                       id="district"
                       name="district"
-                      className="form-select"
+                      className="form-select-sm"
                       value={filters.district}
                       onChange={(event) =>
                         setFilters({ ...filters, district: event.target.value })
@@ -141,14 +153,17 @@ function Allnews() {
                     </select>
                   </div>
 
-                  <div className="col-md-4">
-                    <label htmlFor="vehicle" className="form-label">
+                  <div className="col-md-4 form-group d-flex align-items-center">
+                    <label
+                      htmlFor="vehicle"
+                      className="form-label me-2 fw-bold text-secondary small"
+                    >
                       Vehicle:
                     </label>
                     <select
                       id="vehicle"
                       name="vehicle"
-                      className="form-select"
+                      className="form-select-sm"
                       value={filters.vehicle}
                       onChange={(event) =>
                         setFilters({ ...filters, vehicle: event.target.value })
@@ -163,14 +178,17 @@ function Allnews() {
                     </select>
                   </div>
 
-                  <div className="col-md-4">
-                    <label htmlFor="timeOfDay" className="form-label">
+                  <div className="col-md-4 form-group d-flex align-items-center">
+                    <label
+                      htmlFor="timeOfDay"
+                      className="form-label me-2 fw-bold text-secondary small"
+                    >
                       Time of Day:
                     </label>
                     <select
                       id="timeOfDay"
                       name="timeOfDay"
-                      className="form-select"
+                      className="form-select-sm"
                       value={filters.timeOfDay}
                       onChange={(event) =>
                         setFilters({
@@ -185,14 +203,17 @@ function Allnews() {
                     </select>
                   </div>
 
-                  <div className="col-md-4">
-                    <label htmlFor="dayOfWeek" className="form-label">
+                  <div className="col-md-4 form-group d-flex align-items-center">
+                    <label
+                      htmlFor="dayOfWeek"
+                      className="form-label me-2 fw-bold text-secondary small"
+                    >
                       Day of Week:
                     </label>
                     <select
                       id="dayOfWeek"
                       name="dayOfWeek"
-                      className="form-select"
+                      className="form-select-sm"
                       value={filters.dayOfWeek}
                       onChange={(event) =>
                         setFilters({
@@ -210,8 +231,11 @@ function Allnews() {
                     </select>
                   </div>
 
-                  <div className="col-md-4 d-flex align-items-center">
-                    <button onClick={handleSearch} className="btn btn-primary">
+                  <div className="col-md-4 form-group d-flex align-items-center justify-content-center">
+                    <button
+                      onClick={handleSearch}
+                      className="btn btn-sm btn-success"
+                    >
                       Search
                     </button>
                   </div>
