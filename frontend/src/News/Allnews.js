@@ -4,7 +4,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import LatestNews from "./LatestNews";
 import Leftbar from "./Leftbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   division_districts,
@@ -71,15 +70,15 @@ function Allnews() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2 mt-4 text-center">
+        <div className="col-md-2  text-center">
           <Leftbar></Leftbar>
         </div>
-        <div className="col-md-7 border-start">
-          <div className="card mb-4">
+        <div className="col-md-7 border-start" >
+          <div className="card mb-2" style={{ backgroundColor: "#edf2f4" }}>
             <div className="card-header">
-              <div className="row">
+              <div className="row" >
                 <div className="col-md-2">
-                  <h5 className="mb-0 mt-3 text-center">
+                  <h5 className="mb-0 mt-1 text-center">
                     <button
                       className="btn btn-outline-success"
                       onClick={() => setFiltersOpen(!filtersOpen)}
@@ -89,8 +88,8 @@ function Allnews() {
                     </button>
                   </h5>
                 </div>
-                <div className="col-md-8">
-                  <h3 className="mt-3 text-center">News Articles</h3>
+                <div className="col-md-8" > 
+                  <h3 className="mt-2 text-center">News Articles</h3>
                 </div>
                 <div className="col-md-2"></div>
               </div>
@@ -208,7 +207,7 @@ function Allnews() {
                       htmlFor="dayOfWeek"
                       className="form-label me-2 fw-bold text-secondary small"
                     >
-                      Day of Week:
+                      Weekday:
                     </label>
                     <select
                       id="dayOfWeek"
@@ -246,18 +245,19 @@ function Allnews() {
           <hr />
           <div className="row">
             {news.map((newsItem, index) => (
-              <div className="col-md-4 mb-4" key={index}>
-                <div className="card bg-light p-4 rounded shadow">
+              <div className="col-md-4 mb-2" key={index}>
+                <div className="card  p-4 rounded shadow" style={{ backgroundColor: '#edf2f4'}}>
                   <div className="card-body">
                     <h5 className="card-title">
                       <>{newsItem?.title}</>
                     </h5>
-                    <p className="card-text">
+                    <p className="card-text small">
                       {truncateText(newsItem?.content, 100)}
                     </p>
                     <Link
                       to={`/news-article/${newsItem?._id}`}
-                      className="btn btn-sm btn-secondary"
+                      className="btn btn-sm text-white"
+                      style={{ backgroundColor: '#2b6777' }}
                     >
                       Read More
                     </Link>

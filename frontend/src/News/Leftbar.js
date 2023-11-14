@@ -1,28 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button} from "react-bootstrap";
 
 
 function Leftbar() {
-  const [news, setNews] = useState([]);
-  const [latestNews, setLatestNews] = useState([]);
   const navigate = useNavigate()
-
-  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
-//   useEffect(() => {
-//     // Fetch all news
-//     axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
-//       setNews(response.data);
-//     });
-
-//     // Fetch the top 5 latest news
-//     axios.get(`${apiBaseUrl}/news/latest-news/`).then((response) => {
-//       setLatestNews(response.data);
-//     });
-//   }, [apiBaseUrl]);
-
 
   const keywords = [
     "ঢাকা",
@@ -37,23 +19,17 @@ function Leftbar() {
   const division = "division"
 
   return (
-    <>
-      <h3 mt-4 text-center>
-        Divisions
-      </h3>
+    <div>
+      <div className="row" style={{ backgroundColor: "#edf2f4" }}>
+        <h3 className="text-center mt-3 mb-3">Divisions</h3>
+      </div>
       <hr />
       <ul className="list-group">
         {keywords.map((keyword) => (
-          // <Link
-          //   className="list-group-item"
-          //   style={{ cursor: "pointer" }}
-          //   key={keyword}
-          //   to="/searchednews"
-          // >
-          //   <span>{keyword}</span>
-          // </Link>
+          
           <Button
-          className="list-group-item"
+          className="list-group-item btn-sm"
+          style={{ backgroundColor: '#edf2f4', borderRadius: '5px',border: '0.2px solid #2b6777' }}
           onClick={() => {
             navigate("/searchednews", {replace:true, state:{keyword,division}});
           }}
@@ -62,7 +38,7 @@ function Leftbar() {
         </Button>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

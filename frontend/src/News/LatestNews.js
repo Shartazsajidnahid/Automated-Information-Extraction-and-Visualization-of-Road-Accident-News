@@ -10,29 +10,35 @@ function LatestNews({ latestNews }) {
   };
   return (
     <div>
-      <h3 className="text-center mt-4">Top 5 Latest News</h3>
-      <hr></hr>
-      <ul>
-        {latestNews.map((newsItem) => (
-          <div className="card ">
-            <div className="card-body">
-              <h5 className="card-title text-white bg-dark">
-                {newsItem?.title}
-              </h5>
-              <p className="card-text">
-                {truncateText(newsItem?.content, 100)}
-              </p>
-              <Link
-                to={`/news-article/${newsItem?._id}`}
-                className="btn btn-sm btn-secondary"
-              >
-                Read More
-              </Link>
-              {/* <Link to={{ pathname: `/news/${index}`, state: { newsItem: newsItem } }}>Read More</Link> Use Link */}
+      <div className="row" style={{ backgroundColor: "#edf2f4" }}>
+        <h3 className="text-center mt-3 mb-3">Top 5 Latest News</h3>
+      </div>
+      <hr />
+      <div className="row">
+        <ul>
+          {latestNews.map((newsItem) => (
+            <div>
+              <div className="card " style={{ backgroundColor: "#edf2f4" }}>
+                <div className="card-body">
+                  <h5 className="card-title  ">{newsItem?.title}</h5>
+                  <p className="card-text small">
+                    {truncateText(newsItem?.content, 100)}
+                  </p>
+                  <Link
+                    to={`/news-article/${newsItem?._id}`}
+                    className="btn btn-sm text-white"
+                    style={{ backgroundColor: "#2b6777" }}
+                  >
+                    Read More
+                  </Link>
+                  {/* <Link to={{ pathname: `/news/${index}`, state: { newsItem: newsItem } }}>Read More</Link> Use Link */}
+                </div>
+              </div>
+              <hr></hr>
             </div>
-          </div>
-        ))}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

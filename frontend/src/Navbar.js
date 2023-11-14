@@ -1,21 +1,18 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ExcelJS from "exceljs";
 
 
 function Navbar() {
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-  // const [newsData, setNewsData] = useState([]);
 
   async function exportNewsDataToExcel(newsData) {
-    // Create a new Excel file
+    
     const workbook = new ExcelJS.Workbook();
   
-    // Add a new worksheet to the Excel file
     const worksheet = workbook.addWorksheet("News Data");
   
-    // Set the column headers for the worksheet
     worksheet.columns = [
 
       { header: "Title" },
@@ -29,7 +26,6 @@ function Navbar() {
       { header: "Source" },
     ];
   
-    // Iterate over the news data array and add each object to the worksheet
     newsData.forEach((newsItem) => {
       const row = worksheet.addRow();
       // Set the cell values for each column in the worksheet
@@ -44,7 +40,6 @@ function Navbar() {
       row.getCell(9).value = newsItem.source;
     });
   
-    // Save the Excel file to the user's browser
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
     const url = URL.createObjectURL(blob);

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
 
 function ChartPage() {
   const [chartType, setChartType] = useState("bar");
   const [dataOption, setDataOption] = useState("vehicles");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);

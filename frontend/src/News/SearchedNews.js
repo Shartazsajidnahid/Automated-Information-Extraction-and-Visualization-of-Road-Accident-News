@@ -15,9 +15,16 @@ function SearchedNews() {
 
   useEffect(() => {
     // Fetch all news
-    if(division)
-    axios.get(`${apiBaseUrl}/news/news_by_division?division=${keyword}`).then((response) => {
-      setNews(response.data);
+    if(division){
+      axios.get(`${apiBaseUrl}/news/news_by_division?division=${keyword}`).then((response) => {
+        setNews(response.data);
+      });
+    }
+      
+    
+      // Fetch the top 5 latest news
+    axios.get(`${apiBaseUrl}/news/latest-news/`).then((response) => {
+      setLatestNews(response.data);
     });
 
   }, [apiBaseUrl, keyword]);
@@ -61,7 +68,7 @@ function SearchedNews() {
         </div>
         <div className="col-md-3 border-start">
             Tofill
-          {/* <LatestNews latestNews={latestNews} /> */}
+          <LatestNews latestNews={latestNews} />
         </div>
       </div>
     </div>
