@@ -1,12 +1,28 @@
+// Allnews.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LatestNews from "./LatestNews";
 import Leftbar from "./Leftbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  division_districts,
+  bangla_days,
+  vehicle_types,
+} from "../Data/FilterData";
 
 function Allnews() {
   const [news, setNews] = useState([]);
   const [latestNews, setLatestNews] = useState([]);
+  const [filters, setFilters] = useState({
+    division: "",
+    district: "",
+    timeOfDay: "",
+    dayOfWeek: "",
+    vehicle: "",
+  });
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -29,19 +45,28 @@ function Allnews() {
     return text;
   };
 
-  const tokeyword = (keyword) => {
-    console.log(keyword);
-  }
+  const handleDivisionChange = (event) => {
+    // Reset district when division changes
+    setFilters({ ...filters, division: event.target.value, district: "" });
+  };
 
-  const keywords = [
-    "ঢাকা",
-    "চট্টগ্রাম",
-    "রাজশাহী",
-    "খুলনা",
-    "বরিশাল",
-    "ময়মনসিংহ",
-    "রংপুর"
-  ];
+  const handleSearch = () => {
+    const filteredNews = news.filter((newsItem) => {
+      const parameters = newsItem.parameters;
+
+      return (
+        (!filters.division || parameters.division === filters.division) &&
+        (!filters.district || parameters.district === filters.district) &&
+        (!filters.timeOfDay || parameters.timeofday === filters.timeOfDay) &&
+        (!filters.dayOfWeek || parameters.dayofweek === filters.dayOfWeek) &&
+        (!filters.vehicle ||
+          parameters.vehicle1 === filters.vehicle ||
+          parameters.vehicle2 === filters.vehicle)
+      );
+    });
+
+    setNews(filteredNews);
+  };
 
   return (
     <div className="container-fluid">
@@ -50,7 +75,150 @@ function Allnews() {
           <Leftbar></Leftbar>
         </div>
         <div className="col-md-7 border-start">
-          <h3 className="mt-4 text-center">News Articles</h3>
+          <div className="card mb-4">
+            <div className="card-header">
+              <div className="row">
+                <div className="col-md-2">
+                  <h5 className="mb-0 mt-3 text-center">
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => setFiltersOpen(!filtersOpen)}
+                    >
+                      Filters &nbsp;
+                      <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                  </h5>
+                </div>
+                <div className="col-md-8">
+                  <h3 className="mt-3 text-center">News Articles</h3>
+                </div>
+                <div className="col-md-2"></div>
+              </div>
+            </div>
+            {filtersOpen && (
+              <div className="card-body">
+                <div className="filter-bar row g-3">
+                  <div className="col-md-4">
+                    <label htmlFor="division" className="form-label">
+                      Division:
+                    </label>
+                    <select
+                      id="division"
+                      name="division"
+                      className="form-select"
+                      value={filters.division}
+                      onChange={handleDivisionChange}
+                    >
+                      <option value="">Select Division</option>
+                      {Object.keys(division_districts).map((division) => (
+                        <option key={division} value={division}>
+                          {division}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor="district" className="form-label">
+                      District:
+                    </label>
+                    <select
+                      id="district"
+                      name="district"
+                      className="form-select"
+                      value={filters.district}
+                      onChange={(event) =>
+                        setFilters({ ...filters, district: event.target.value })
+                      }
+                    >
+                      <option value="">Select District</option>
+                      {filters.division &&
+                        division_districts[filters.division].map((district) => (
+                          <option key={district} value={district}>
+                            {district}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor="vehicle" className="form-label">
+                      Vehicle:
+                    </label>
+                    <select
+                      id="vehicle"
+                      name="vehicle"
+                      className="form-select"
+                      value={filters.vehicle}
+                      onChange={(event) =>
+                        setFilters({ ...filters, vehicle: event.target.value })
+                      }
+                    >
+                      <option value="">Select Vehicle</option>
+                      {vehicle_types.map((vehicle) => (
+                        <option key={vehicle} value={vehicle}>
+                          {vehicle}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor="timeOfDay" className="form-label">
+                      Time of Day:
+                    </label>
+                    <select
+                      id="timeOfDay"
+                      name="timeOfDay"
+                      className="form-select"
+                      value={filters.timeOfDay}
+                      onChange={(event) =>
+                        setFilters({
+                          ...filters,
+                          timeOfDay: event.target.value,
+                        })
+                      }
+                    >
+                      <option value="">Select Time of Day</option>
+                      <option value="দিন">দিন</option>
+                      <option value="রাত">রাত</option>
+                    </select>
+                  </div>
+
+                  <div className="col-md-4">
+                    <label htmlFor="dayOfWeek" className="form-label">
+                      Day of Week:
+                    </label>
+                    <select
+                      id="dayOfWeek"
+                      name="dayOfWeek"
+                      className="form-select"
+                      value={filters.dayOfWeek}
+                      onChange={(event) =>
+                        setFilters({
+                          ...filters,
+                          dayOfWeek: event.target.value,
+                        })
+                      }
+                    >
+                      <option value="">Select Day of Week</option>
+                      {bangla_days.map((day) => (
+                        <option key={day} value={day}>
+                          {day}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="col-md-4 d-flex align-items-center">
+                    <button onClick={handleSearch} className="btn btn-primary">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           <hr />
           <div className="row">
             {news.map((newsItem, index) => (
