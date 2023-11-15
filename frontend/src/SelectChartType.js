@@ -52,7 +52,6 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     { typename: "রাত", count: 11 },
   ];
 
-  // Create a mapping of data options to their respective data and label  
   const dataOptions = {
     vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "typename" },
     places: { data: placeData, label: "Place Occurrences", key: "typename" },
@@ -62,14 +61,20 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     // Fetch vehicleData
-    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`).then((response) => {
-      setvehicleData(response.data);
-    });
+    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
+      .then((response) => {
+        setvehicleData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [apiBaseUrl, table_name, occurrence_type]);
+  
+  useEffect(() => {
     if (chartRef.current) {
       if (myChartRef.current) {
         myChartRef.current.destroy();
       }
-
       myChartRef.current = new Chart(chartRef.current, {
         type: chartType,
         data: chartDataRef.current,
@@ -80,10 +85,9 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       });
       updateChart(chartType, dataOption);
     }
-  }, [chartType, dataOption, apiBaseUrl]);
-
+  }, [chartType, dataOption, vehicleData]);
+  
   const updateChart = (selectedChartType, selectedDataOption) => {
-    console.log(vehicleData);
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
 
