@@ -1,8 +1,7 @@
-# app/db.py
-
 from motor.motor_asyncio import AsyncIOMotorClient
 
-MONGODB_URL = "mongodb://localhost:27017"  # Update with your MongoDB server URL
+
+MONGODB_URL = "mongodb://localhost:27017" 
 DATABASE_NAME = "news"
 
 # MongoDB client
@@ -13,3 +12,7 @@ db = client[DATABASE_NAME]
 
 # Collection for NewsArticles
 news_articles_collection = db["news_articles"]
+vehicle_info_collection = db["vehicle_info"]
+
+def get_collection(collection_name: str):
+    return db[collection_name]

@@ -1,40 +1,70 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { Form, Container, Row, Col } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
+import "./App.css"
 
 function ChartPage() {
   const [chartType, setChartType] = useState("bar");
   const [dataOption, setDataOption] = useState("vehicles");
+  const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
+  const table_name = "vehicle_info";
+  const occurrence_type = "dead";
 
-  const vehicleData = [
-    { vehicle_type: "মোটরসাইকেল", count: 10 },
-    { vehicle_type: "বাইক", count: 4 },
-    { vehicle_type: "ভ্যান", count: 8 },
-    { vehicle_type: "গাড়ি", count: 20 },
-    { vehicle_type: "বাস", count: 5 }
-];
+//   const vehicleData = [
+//     { typename: "মোটরসাইকেল", count: 10 },
+//     { typename: "বাইক", count: 4 },
+//     { typename: "ভ্যান", count: 8 },
+//     { typename: "গাড়ি", count: 20 },
+//     { typename: "বাস", count: 5 }
+// ];
+
+
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 
   const placeData = [
-    { place: "ঢাকা", count: 12 },
-    { place: "বান্দরবান", count: 34 },
-    { place: "ময়মনসিংহ", count: 8 },
-    { place: "কক্সবাজার", count: 15 },
-    { place: "সিলেট", count: 22 }
+    { typename: "ঢাকা", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "ময়মনসিংহ", count: 8 },
+    { typename: "কক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 }
 ];
 
-  // Create a mapping of data options to their respective data and label
+  const dayOfWeekData = [
+    { typename: "রবিবার", count: 9 },
+    { typename: "সোমবার", count: 8 },
+    { typename: "মঙ্গলবার", count: 5 },
+    { typename: "বুধবার", count: 7 },
+    { typename: "বৃহস্পতিবার", count: 12 },
+    { typename: "শুক্রবার", count: 3 },
+    { typename: "শনিবার", count: 10 }
+    
+  ];
+
+  const timeofDayData = [
+    { typename: "দিন", count: 4 },
+    { typename: "রাত", count: 11 },
+  ];
+
+  // Create a mapping of data options to their respective data and label  
   const dataOptions = {
-    vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "vehicle_type" },
-    places: { data: placeData, label: "Place Occurrences", key: "place" },
+    vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "typename" },
+    places: { data: placeData, label: "Place Occurrences", key: "typename" },
+    dayofweek: { data: dayOfWeekData, label: "Occurrences", key: "typename" },
+    timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
   };
 
   useEffect(() => {
+    // Fetch vehicleData
+    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`).then((response) => {
+      setvehicleData(response.data);
+    });
     if (chartRef.current) {
       if (myChartRef.current) {
         myChartRef.current.destroy();
@@ -48,12 +78,12 @@ function ChartPage() {
           responsive: false,
         },
       });
-
       updateChart(chartType, dataOption);
     }
-  }, [chartType, dataOption]);
+  }, [chartType, dataOption, apiBaseUrl]);
 
   const updateChart = (selectedChartType, selectedDataOption) => {
+    console.log(vehicleData);
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
 
@@ -76,10 +106,10 @@ function ChartPage() {
   };
 
   return (
-    <Container className="mt-3">
+    <Container className="mt-3 ">
       <Row className="justify-content-center">
-        <Col md={6} className="bg-light p-4 rounded shadow">
-          <h2 className="text-center mb-4">Customize</h2>
+        <Col md={6} className=" p-4 rounded shadow custombackground">
+          <h2 className="text-center mb-4">Customization panel</h2>
           <Form>
             <Row>
               <Col md={6}>
@@ -115,6 +145,8 @@ function ChartPage() {
                   >
                     <option value="vehicles">Vehicles</option>
                     <option value="places">Places</option>
+                    <option value="dayofweek">Weekdays</option>
+                    <option value="timeofday">Time of Day</option>
                   </Form.Control>
                 </Form.Group>
               </Col>

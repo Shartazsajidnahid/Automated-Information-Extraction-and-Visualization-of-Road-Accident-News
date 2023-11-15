@@ -8,6 +8,7 @@ from ..helpers.bangla_transform import find_parameters
 from ..helpers.find_district_location import locate
 from ..helpers import process_news_tokens
 from datetime import datetime
+from ..controllers.graphdataController import update_occurrence
 
 url1 = 'https://en.prothomalo.com/'
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
@@ -44,6 +45,7 @@ def scrape_all():
 
 
 async def fetch_all_news(): 
+    await update_occurrence("vehicle_info", "ট্রাক", "dead", 1)
     news = []
     cursor = news_articles_collection.find({})
     async for document in cursor:

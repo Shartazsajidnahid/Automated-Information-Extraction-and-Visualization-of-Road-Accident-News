@@ -44,8 +44,8 @@ async def create_news_article(news_article: NewsArticle):
 
 @router.get("/news_by_division")
 async def get_news_by_division(division: str):
-    print("Hey");
-    print(division);
+    # print("Hey");
+    # print(division);
     news_articles = await news_articles_collection.find({"parameters.division": division}).to_list(None)
 
     # Convert ObjectIds to strings
