@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import LatestNews from "./LatestNews";
 import Leftbar from "./Leftbar";
-
+import "../App.css"
 import {
   division_districts,
   bangla_days,
@@ -13,6 +13,7 @@ import {
 
 function Allnews() {
   const [news, setNews] = useState([]);
+  const [tempNews, setTempNews] = useState([]);
   const [latestNews, setLatestNews] = useState([]);
   const [filters, setFilters] = useState({
     division: "",
@@ -29,6 +30,7 @@ function Allnews() {
     // Fetch all news
     axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
       setNews(response.data);
+      setTempNews(response.data)
     });
 
     // Fetch the top 5 latest news
@@ -50,9 +52,10 @@ function Allnews() {
   };
 
   const handleSearch = () => {
-    const filteredNews = news.filter((newsItem) => {
+    console.log(news.length);
+    const filteredNews = [...news].filter((newsItem) => {
       const parameters = newsItem.parameters;
-
+  
       return (
         (!filters.division || parameters.division === filters.division) &&
         (!filters.district || parameters.district === filters.district) &&
@@ -63,28 +66,28 @@ function Allnews() {
           parameters.vehicle2 === filters.vehicle)
       );
     });
-
-    setNews(filteredNews);
+  
+    setTempNews(filteredNews);
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid " >
       <div className="row">
         <div className="col-md-2  text-center">
           <Leftbar></Leftbar>
         </div>
         <div className="col-md-7 border-start" >
-          <div className="card mb-2" style={{ backgroundColor: "#edf2f4" }}>
+          <div className="card mb-2 custombackground" >
             <div className="card-header">
               <div className="row" >
                 <div className="col-md-2">
                   <h5 className="mb-0 mt-1 text-center">
-                    <button
+                     <button
                       className="btn btn-outline-success"
                       onClick={() => setFiltersOpen(!filtersOpen)}
                     >
                       Filters &nbsp;
-                      <i class="fa-solid fa-caret-down"></i>
+                      <i className="fa-solid fa-caret-down"></i>
                     </button>
                   </h5>
                 </div>
@@ -244,9 +247,9 @@ function Allnews() {
           </div>
           <hr />
           <div className="row">
-            {news.map((newsItem, index) => (
+            {tempNews.map((newsItem, index) => (
               <div className="col-md-4 mb-2" key={index}>
-                <div className="card  p-4 rounded shadow" style={{ backgroundColor: '#edf2f4'}}>
+                <div className="card  p-4 rounded shadow custombackground" >
                   <div className="card-body">
                     <h5 className="card-title">
                       <>{newsItem?.title}</>

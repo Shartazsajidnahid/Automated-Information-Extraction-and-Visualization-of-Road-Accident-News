@@ -25,9 +25,10 @@ function Leftbar() {
       </div>
       <hr />
       <ul className="list-group">
-        {keywords.map((keyword) => (
+        {keywords.map((keyword, index) => (
           
           <Button
+          key={index}
           className="list-group-item btn-sm"
           style={{ backgroundColor: '#edf2f4', borderRadius: '5px',border: '0.2px solid #2b6777' }}
           onClick={() => {

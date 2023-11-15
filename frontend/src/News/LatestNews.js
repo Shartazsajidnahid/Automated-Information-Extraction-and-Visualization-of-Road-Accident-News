@@ -10,15 +10,15 @@ function LatestNews({ latestNews }) {
   };
   return (
     <div>
-      <div className="row" style={{ backgroundColor: "#edf2f4" }}>
+      <div className="row custombackground" >
         <h3 className="text-center mt-3 mb-3">Top 5 Latest News</h3>
       </div>
       <hr />
       <div className="row">
         <ul>
-          {latestNews.map((newsItem) => (
-            <div>
-              <div className="card " style={{ backgroundColor: "#edf2f4" }}>
+          {latestNews.map((newsItem, index) => (
+            <div key={index}>
+              <div className="card custombackground" >
                 <div className="card-body">
                   <h5 className="card-title  ">{newsItem?.title}</h5>
                   <p className="card-text small">
