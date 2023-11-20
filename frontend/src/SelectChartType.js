@@ -14,7 +14,7 @@ function ChartPage() {
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
   const table_name = "vehicle_info";
-  const occurrence_type = "dead";
+  const occurrence_type = "occurrence";
 
 //   const vehicleData = [
 //     { typename: "মোটরসাইকেল", count: 10 },

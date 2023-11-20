@@ -3,6 +3,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 # from ...api.database.db import DATABASE_NAME
 
 class VehicleInfo(BaseModel):
+
     typename: str
     occurrence: int = 0
     dead: int = 0

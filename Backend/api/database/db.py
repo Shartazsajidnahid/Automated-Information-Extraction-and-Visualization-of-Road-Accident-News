@@ -13,6 +13,8 @@ db = client[DATABASE_NAME]
 # Collection for NewsArticles
 news_articles_collection = db["news_articles"]
 vehicle_info_collection = db["vehicle_info"]
+timeofday_info_collection = db["timeofday_info"]
+
 
 def get_collection(collection_name: str):
     return db[collection_name]
