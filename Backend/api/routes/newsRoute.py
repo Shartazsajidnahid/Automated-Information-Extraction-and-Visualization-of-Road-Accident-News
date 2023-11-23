@@ -4,6 +4,7 @@ from ..controllers.dummynews import dummy_news, get_news_article
 from ..models.NewsArticle import NewsArticle, Parameter
 from ..database.db import news_articles_collection
 from ..helpers.hugface import find_params
+from ..helpers.scraping import scrape_all
 
 
 
@@ -16,6 +17,10 @@ router = APIRouter()
 @router.get("/dummy_news")
 def get_dummy_news():
     return dummy_news()
+
+@router.get("/scrape_news")
+async def scrape_news():
+    return await scrape_all()
 
 
 @router.get("/news-article/{article_id}")

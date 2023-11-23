@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -14,9 +12,28 @@ function Demo() {
     });
   }, [apiBaseUrl]);
 
+  function handleDownloadExcel() {
+    try {
+      console.log("here i am");
+        
+      axios.get(`${apiBaseUrl}/news/scrape_news/`).then((response) => {
+        if(response.data){
+        }
+      });
+      
+    } catch (error) {
+      console.error("Error updating database:", error);
+    }
+  }
+
   return (
     <div>
       {news}
+      <button
+        className="btn btn-lg btn-success me-2"
+        aria-current="page"
+        onClick={handleDownloadExcel}
+      >Updata Database</button>
     </div>
   );
 }

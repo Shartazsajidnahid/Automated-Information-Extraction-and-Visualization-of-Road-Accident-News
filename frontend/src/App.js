@@ -17,25 +17,25 @@ import SearchedNews from "./News/SearchedNews";
 
 function App() {
   return (
-    // <Demo></Demo>
-    <>
-      <Router>
-        <Navbar></Navbar>
-        <div>
-          <Routes>
-            <Route path="/allnews" element={<Allnews />} />
-            <Route path="/" element={<Allnews />} />
-            <Route path="/news-article/:id" element={<NewsArticleDetails />} />
-            <Route path="/searchednews" element={<SearchedNews />} />
+    <Demo></Demo>
+    // <>
+    //   {/* <Router>
+    //     <Navbar></Navbar>
+    //     <div>
+    //       <Routes>
+    //         <Route path="/allnews" element={<Allnews />} />
+    //         <Route path="/" element={<Allnews />} />
+    //         <Route path="/news-article/:id" element={<NewsArticleDetails />} />
+    //         <Route path="/searchednews" element={<SearchedNews />} />
 
-            <Route path="/selectChartType" element={<SelectChartType />} />
-            <Route path="/viewChart" element={<ViewChart />} />
+    //         <Route path="/selectChartType" element={<SelectChartType />} />
+    //         <Route path="/viewChart" element={<ViewChart />} />
 
 
-          </Routes>
-        </div>
-      </Router>
-    </>
+    //       </Routes>
+    //     </div>
+    //   </Router> */}
+    // </>
   );
 }
 
