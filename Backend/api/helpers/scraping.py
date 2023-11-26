@@ -55,13 +55,13 @@ async def scrape_all():
                 
             # all_links.append(href)
             # print(news_item)
-            all_news.append(news_item)
+            if(len(content)>=100):
+                all_news.append(news_item)
 
         load_more_button = driver.find_element(By.CLASS_NAME, "more")
-        if(len(all_news)>=10):
+        if(len(all_news)>=600):
             break
     driver.quit()
-
     # news_articles = scrape_all()
     for news_article in all_news:
         response = await create_news(news_article)

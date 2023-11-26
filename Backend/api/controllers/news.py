@@ -48,7 +48,7 @@ async def fetch_all_news():
     await update_occurrence("vehicle_info", "সাইকেল", "dead", 1)
     print("hey ")
     news = []
-    cursor = news_articles_collection.find({})
+    cursor = news_articles_collection.find({}).sort("timestamp", -1)
     async for document in cursor:
         document['_id'] = str(document['_id'])
         news.append(document)

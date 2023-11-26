@@ -15,29 +15,22 @@ function Navbar() {
   
     worksheet.columns = [
 
-      { header: "Title" },
       { header: "Content" },
-      { header: "Link" },
-      { header: "Location" },
-      { header: "Time" },
-      { header: "Vehicles" },
-      { header: "Dead" },
-      { header: "Injured" },
-      { header: "Source" },
+      { header: "Accident Location" },
+      { header: "Accident Time" },
+      { header: "No of Dead from News" },
+      { header: "No of Injured from News" }
+
     ];
   
     newsData.forEach((newsItem) => {
       const row = worksheet.addRow();
       // Set the cell values for each column in the worksheet
-      row.getCell(1).value = newsItem.title;
-      row.getCell(2).value = newsItem.content;
-      row.getCell(3).value = newsItem.link;
-      row.getCell(4).value = newsItem.parameters.location;
-      row.getCell(5).value = newsItem.parameters.time;
-      row.getCell(6).value = newsItem.parameters.vehicles;
-      row.getCell(7).value = newsItem.parameters.dead;
-      row.getCell(8).value = newsItem.parameters.injured;
-      row.getCell(9).value = newsItem.source;
+      row.getCell(1).value = newsItem.content;
+      row.getCell(2).value = newsItem.parameters.location;
+      row.getCell(3).value = newsItem.parameters.time;
+      row.getCell(4).value = newsItem.parameters.dead;
+      row.getCell(5).value = newsItem.parameters.injured;
     });
   
     const buffer = await workbook.xlsx.writeBuffer();
