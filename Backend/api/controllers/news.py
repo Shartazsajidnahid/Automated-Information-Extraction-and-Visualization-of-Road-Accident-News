@@ -45,7 +45,7 @@ def scrape_all():
 
 
 async def fetch_all_news(): 
-    await update_occurrence("vehicle_info", "সাইকেল", "dead", 1)
+    # await update_occurrence("vehicle_info", "সাইকেল", "dead", 1)
     print("hey ")
     news = []
     cursor = news_articles_collection.find({}).sort("timestamp", -1)
