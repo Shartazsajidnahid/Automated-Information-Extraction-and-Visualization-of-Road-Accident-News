@@ -152,7 +152,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       </Row>
       <Row className="justify-content-center mt-4">
         <Col md={12}>
-        <canvas ref={chartRef} style={{ width: '80%', height: '80%' }}></canvas>
+        <canvas ref={chartRef} style={{ width: '80%', height: '100%' }}></canvas>
         </Col>
       </Row>
     </Container>

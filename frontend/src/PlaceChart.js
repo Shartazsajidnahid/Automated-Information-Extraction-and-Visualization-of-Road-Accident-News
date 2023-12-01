@@ -86,18 +86,49 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
 
+    let backgroundColors, border;
+
+    if (selectedChartType === "pie") {
+      // For Pie chart, let Chart.js use its default colors
+      backgroundColors = undefined;
+    } else {
+      // For other chart types (e.g., bar, line), use your specified colors
+      const colors = [
+        "rgba(91, 8, 136,0.7)", // Dark Red
+        // 'rgba(0, 100, 0, 0.7)', // Dark Green
+        // 'rgba(0, 0, 139, 0.7)', // Dark Blue
+      ];
+
+      backgroundColors = counts.map((count, index) => {
+        const colorIndex = index % colors.length;
+        return colors[colorIndex];
+      });
+    }
+
+    if (selectedChartType === "line") {
+        // For Pie chart, let Chart.js use its default colors
+        border = 3;
+    } else{
+        border = undefined;
+    }
+   
+
+
+
     chartDataRef.current = {
       labels: labels,
       datasets: [
         {
           label: dataOptions[selectedDataOption].label,
           data: counts,
-          borderWidth: 2,
+          borderWidth: border,
+          backgroundColor: backgroundColors,
+          borderJoinStyle: 'miter'
         },
       ],
     };
 
-    myChartRef.current.config.type = selectedChartType; // Update the chart type
+    myChartRef.current.config.type = selectedChartType;
     myChartRef.current.update();
   };
 
@@ -152,7 +183,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       </Row>
       <Row className="justify-content-center mt-4">
         <Col md={12}>
-        <canvas ref={chartRef} style={{ width: '80%', height: '80%' }}></canvas>
+        <canvas ref={chartRef} style={{ width: '80%', height: '100%' }}></canvas>
         </Col>
       </Row>
     </Container>
