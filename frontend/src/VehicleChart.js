@@ -3,7 +3,7 @@ import axios from "axios";
 import { Form, Container, Row, Col } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
-import "./App.css";
+import "./App.css"
 
 function VehileChart() {
   const [chartType, setChartType] = useState("bar");
@@ -16,15 +16,17 @@ function VehileChart() {
   const table_name = "vehicle_info";
   const occurrence_type = "occurrence";
 
-  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
 
   const placeData = [
     { typename: "ঢাকা", count: 12 },
     { typename: "বান্দরবান", count: 34 },
     { typename: "ময়মনসিংহ", count: 8 },
     { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 },
-  ];
+    { typename: "সিলেট", count: 22 }
+];
 
   const dayOfWeekData = [
     { typename: "রবিবার", count: 9 },
@@ -33,7 +35,8 @@ function VehileChart() {
     { typename: "বুধবার", count: 7 },
     { typename: "বৃহস্পতিবার", count: 12 },
     { typename: "শুক্রবার", count: 3 },
-    { typename: "শনিবার", count: 10 },
+    { typename: "শনিবার", count: 10 }
+    
   ];
 
   const timeofDayData = [
@@ -42,11 +45,7 @@ function VehileChart() {
   ];
 
   const dataOptions = {
-    vehicles: {
-      data: vehicleData,
-      label: "Vehicle Occurrence",
-      key: "typename",
-    },
+    vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "typename" },
     places: { data: placeData, label: "Place Occurrences", key: "typename" },
     dayofweek: { data: dayOfWeekData, label: "Occurrences", key: "typename" },
     timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
@@ -54,8 +53,7 @@ function VehileChart() {
 
   useEffect(() => {
     // Fetch vehicleData
-    axios
-      .get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
+    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
       .then((response) => {
         setvehicleData(response.data);
       })
@@ -63,7 +61,7 @@ function VehileChart() {
         console.error("Error fetching data:", error);
       });
   }, [apiBaseUrl, table_name, occurrence_type]);
-
+  
   useEffect(() => {
     if (chartRef.current) {
       if (myChartRef.current) {
@@ -80,9 +78,7 @@ function VehileChart() {
       updateChart(chartType, dataOption);
     }
   }, [chartType, dataOption, vehicleData]);
-
-  // ...
-
+  
   const updateChart = (selectedChartType, selectedDataOption) => {
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
@@ -90,45 +86,20 @@ function VehileChart() {
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
 
-    let backgroundColors;
-
-    if (selectedChartType === "pie") {
-      // For Pie chart, let Chart.js use its default colors
-      backgroundColors = undefined;
-    } else {
-      // For other chart types (e.g., bar, line), use your specified colors
-      const colors = [
-        "rgb(117, 14, 33)", // Dark Red
-        // 'rgba(0, 100, 0, 0.7)', // Dark Green
-        // 'rgba(0, 0, 139, 0.7)', // Dark Blue
-      ];
-
-      backgroundColors = counts.map((count, index) => {
-        const colorIndex = index % colors.length;
-        return colors[colorIndex];
-      });
-    }
-   
-
-
-
     chartDataRef.current = {
       labels: labels,
       datasets: [
         {
           label: dataOptions[selectedDataOption].label,
           data: counts,
-          borderWidth: 1,
-          backgroundColor: backgroundColors,
+          borderWidth: 2,
         },
       ],
     };
 
-    myChartRef.current.config.type = selectedChartType;
+    myChartRef.current.config.type = selectedChartType; // Update the chart type
     myChartRef.current.update();
   };
-
-  // ...
 
   return (
     <Container>
@@ -137,7 +108,7 @@ function VehileChart() {
           <Form>
             <Row>
               <Col md={4}>
-                <h2 className="text-center ">Vehicle</h2>
+              <h2 className="text-center ">Vehicle</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -181,10 +152,7 @@ function VehileChart() {
       </Row>
       <Row className="justify-content-center mt-4">
         <Col md={12}>
-          <canvas
-            ref={chartRef}
-            style={{ width: "80%", height: "100%" }}
-          ></canvas>
+        <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
         </Col>
       </Row>
     </Container>

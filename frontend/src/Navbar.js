@@ -90,7 +90,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/selectChartType">Visualize</Link>
+              <Link className="nav-link" to="/visualizeDashboard">Visualize</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link disabled"></Link>

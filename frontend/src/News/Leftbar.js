@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button} from "react-bootstrap";
+import "../App.css"
 
 
 function Leftbar() {
@@ -20,7 +21,7 @@ function Leftbar() {
 
   return (
     <div>
-      <div className="row" style={{ backgroundColor: "#edf2f4" }}>
+      <div className="row custombackground" >
         <h3 className="text-center mt-3 mb-3">Divisions</h3>
       </div>
       <hr />
@@ -29,8 +30,8 @@ function Leftbar() {
           
           <Button
           key={index}
-          className="list-group-item btn-sm"
-          style={{ backgroundColor: '#edf2f4', borderRadius: '5px',border: '0.2px solid #2b6777' }}
+          className="list-group-item btn-sm custombackground"
+          style={{  borderRadius: '5px',border: '0.2px solid #2b6777' }}
           onClick={() => {
             navigate("/searchednews", {replace:true, state:{keyword,division}});
           }}
