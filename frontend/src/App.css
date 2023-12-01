@@ -57,5 +57,16 @@
 }
 
 .full-height-row {
+    flex: auto;
     overflow: hidden;
+}
+
+
+/* Responsive Styles */
+
+@media (max-width: 767px) {
+    .full-height-row {
+        flex: auto;
+        /* Allow flexible sizing on small screens */
+    }
 }

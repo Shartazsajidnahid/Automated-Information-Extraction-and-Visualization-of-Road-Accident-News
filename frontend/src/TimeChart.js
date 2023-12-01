@@ -104,11 +104,11 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col md={12} className=" p-4 rounded shadow custombackground">
+        <Col md={12} className=" p-2 rounded shadow custombackground">
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center mb-4">Time</h2>
+              <h2 className="text-center ">Time</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
