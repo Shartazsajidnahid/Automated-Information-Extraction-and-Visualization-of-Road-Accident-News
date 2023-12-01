@@ -5,8 +5,8 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 import Chart from "chart.js/auto";
 import "./App.css"
 
-function TimeChart() {
-  const [chartType, setChartType] = useState("line");
+function PlaceChart() {
+  const [chartType, setChartType] = useState("pie");
   const [dataOption, setDataOption] = useState("dayofweek");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
@@ -108,7 +108,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center mb-4">Time</h2>
+              <h2 className="text-center mb-4">Places</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -159,4 +159,4 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   );
 }
 
-export default TimeChart;
+export default PlaceChart;

@@ -6,7 +6,7 @@ import Chart from "chart.js/auto";
 import "./App.css"
 
 function VehileChart() {
-  const [chartType, setChartType] = useState("pie");
+  const [chartType, setChartType] = useState("bar");
   const [dataOption, setDataOption] = useState("vehicles");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
@@ -102,7 +102,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   };
 
   return (
-    <Container className="mt-3 ">
+    <Container>
       <Row className="justify-content-center">
         <Col md={12} className=" p-4 rounded shadow custombackground">
           <Form>
