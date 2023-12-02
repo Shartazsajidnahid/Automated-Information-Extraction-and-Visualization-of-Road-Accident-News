@@ -38,7 +38,7 @@
 }
 
 .custombackground {
-    background-color: #f4eded;
+    background-color: #edebeb;
 }
 
 .full-height-col {
@@ -57,7 +57,7 @@
 }
 
 .full-height-row {
-    flex: auto;
+    /* flex: auto; */
     overflow: hidden;
 }
 

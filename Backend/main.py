@@ -5,7 +5,6 @@ from api.routes.newsRoute import router as news
 from api.routes.demo import router as demo
 from api.routes.sheets import router as sheets
 from api.routes.graphRoute import router as graphchart
-
 app = FastAPI()
 
 # Configure CORS

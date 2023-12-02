@@ -86,7 +86,6 @@ function Allnews() {
           parameters.vehicle2 === filters.vehicle)
       );
     });
-
     setTempNews(filteredNews);
     setDisplayedNews(tempNews.slice(0, perPage));
   };

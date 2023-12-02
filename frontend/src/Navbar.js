@@ -93,6 +93,9 @@ function Navbar() {
               <Link className="nav-link" to="/visualizeDashboard">Visualize</Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link" to="/heatmap">Heatmap</Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link disabled"></Link>
             </li>
           </ul>
