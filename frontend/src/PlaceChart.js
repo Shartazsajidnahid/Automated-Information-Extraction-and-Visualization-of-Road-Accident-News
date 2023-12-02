@@ -111,10 +111,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     } else{
         border = undefined;
     }
-   
-
-
-
+  
     chartDataRef.current = {
       labels: labels,
       datasets: [

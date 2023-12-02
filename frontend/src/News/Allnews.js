@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import LatestNews from "./LatestNews";
 import Leftbar from "./Leftbar";
-import "../App.css"
+import "../App.css";
 import {
   division_districts,
   bangla_days,
@@ -15,6 +15,10 @@ function Allnews() {
   const [news, setNews] = useState([]);
   const [tempNews, setTempNews] = useState([]);
   const [latestNews, setLatestNews] = useState([]);
+
+  const [displayedNews, setDisplayedNews] = useState([]);
+  const [perPage, setPerPage] = useState(15);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     division: "",
     district: "",
@@ -30,7 +34,8 @@ function Allnews() {
     // Fetch all news
     axios.get(`${apiBaseUrl}/news/news-article/`).then((response) => {
       setNews(response.data);
-      setTempNews(response.data)
+      setTempNews(response.data);
+      setDisplayedNews(response.data.slice(0, perPage));
     });
 
     // Fetch the top 5 latest news
@@ -46,6 +51,21 @@ function Allnews() {
     return text;
   };
 
+  const handleLoadMore = () => {
+    // Calculate the indices for the next set of news
+    const startIndex = currentPage * perPage;
+    const endIndex = startIndex + perPage;
+
+    // Update the displayedNews state with the next set of news
+    setDisplayedNews((prevDisplayedNews) => [
+      ...prevDisplayedNews,
+      ...tempNews.slice(startIndex, endIndex),
+    ]);
+
+    // Increment the current page
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   const handleDivisionChange = (event) => {
     // Reset district when division changes
     setFilters({ ...filters, division: event.target.value, district: "" });
@@ -55,7 +75,7 @@ function Allnews() {
     console.log(news.length);
     const filteredNews = [...news].filter((newsItem) => {
       const parameters = newsItem.parameters;
-  
+
       return (
         (!filters.division || parameters.division === filters.division) &&
         (!filters.district || parameters.district === filters.district) &&
@@ -66,23 +86,24 @@ function Allnews() {
           parameters.vehicle2 === filters.vehicle)
       );
     });
-  
+
     setTempNews(filteredNews);
+    setDisplayedNews(tempNews.slice(0, perPage));
   };
 
   return (
-    <div className="container-fluid " >
+    <div className="container-fluid ">
       <div className="row">
         <div className="col-md-2  text-center">
           <Leftbar></Leftbar>
         </div>
-        <div className="col-md-7 border-start" >
-          <div className="card mb-2 custombackground" >
+        <div className="col-md-7 border-start">
+          <div className="card mb-2 custombackground">
             <div className="card-header">
-              <div className="row" >
+              <div className="row">
                 <div className="col-md-2">
                   <h5 className="mb-0 mt-1 text-center">
-                     <button
+                    <button
                       className="btn btn-outline-success"
                       onClick={() => setFiltersOpen(!filtersOpen)}
                     >
@@ -91,7 +112,7 @@ function Allnews() {
                     </button>
                   </h5>
                 </div>
-                <div className="col-md-8" > 
+                <div className="col-md-8">
                   <h3 className="mt-2 text-center">News Articles</h3>
                 </div>
                 <div className="col-md-2"></div>
@@ -247,9 +268,9 @@ function Allnews() {
           </div>
           <hr />
           <div className="row">
-            {tempNews.map((newsItem, index) => (
+            {displayedNews.map((newsItem, index) => (
               <div className="col-md-4 mb-2" key={index}>
-                <div className="card  p-4 rounded shadow custombackground" >
+                <div className="card  p-4 rounded shadow custombackground">
                   <div className="card-body">
                     <h5 className="card-title">
                       <>{newsItem?.title}</>
@@ -260,7 +281,7 @@ function Allnews() {
                     <Link
                       to={`/news-article/${newsItem?._id}`}
                       className="btn btn-sm text-white"
-                      style={{ backgroundColor: '#2b6777' }}
+                      style={{ backgroundColor: "#2b6777" }}
                     >
                       Read More
                     </Link>
@@ -268,6 +289,12 @@ function Allnews() {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="d-flex justify-content-center m-3">
+            <button className="btn btn-secondary text-whit" onClick={handleLoadMore}>
+              Load More &nbsp;
+              <i className="fa-solid fa-caret-down"></i>
+            </button>
           </div>
         </div>
         <div className="col-md-3 border-start">
