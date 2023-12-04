@@ -2,9 +2,7 @@
 
 - nihoto, ahoto
 - vehicle 1, 2
-- day/night
-- which day
-- 
+- if "time" contains garbage, then add tod and dow to time
 
 
 - PKL Files
@@ -14,3 +12,11 @@
 - colours in UI 
 - model train data 
 - Visualization dashboard
+
+
+- বৃহস্পতিবার দিন 
+
+
+- predictive analysis:
+    1)regression: dead and injured number 
+    2)classify: if dead or injured

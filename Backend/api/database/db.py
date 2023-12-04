@@ -9,9 +9,12 @@ client = AsyncIOMotorClient(MONGODB_URL)
 
 # Database instance
 db = client[DATABASE_NAME]
+db2 = client["news2"]
 
 # Collection for NewsArticles
 news_articles_collection = db["news_articles"]
+
+news_articles_collection2 = db2["news_articles"]
 vehicle_info_collection = db["vehicle_info"]
 timeofday_info_collection = db["timeofday_info"]
 

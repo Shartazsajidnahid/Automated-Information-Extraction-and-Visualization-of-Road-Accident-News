@@ -5,8 +5,8 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 import Chart from "chart.js/auto";
 import "./App.css"
 
-function TimeChart() {
-  const [chartType, setChartType] = useState("line");
+function TimeChart({ type }) {
+  const [chartType, setChartType] = useState(type);
   const [dataOption, setDataOption] = useState("dayofweek");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();

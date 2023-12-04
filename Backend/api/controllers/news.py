@@ -1,7 +1,7 @@
 import requests
 from fastapi import HTTPException
 from bs4 import BeautifulSoup
-from ..database.db import news_articles_collection
+from ..database.db import news_articles_collection, news_articles_collection2
 from ..models.NewsArticle import NewsArticle, Parameter
 from bson import ObjectId 
 from ..helpers.bangla_transform import find_parameters
@@ -48,7 +48,7 @@ async def fetch_all_news():
     # await update_occurrence("vehicle_info", "সাইকেল", "dead", 1)
     print("hey ")
     news = []
-    cursor = news_articles_collection.find({}).sort("timestamp", -1)
+    cursor = news_articles_collection2.find({}).sort("timestamp", -1)
     async for document in cursor:
         document['_id'] = str(document['_id'])
         news.append(document)
@@ -78,7 +78,7 @@ async def get_news_by_id(news_id: str):
         raise HTTPException(status_code=400, detail="Invalid ObjectId format")
 
 
-async def create_news(news_article: NewsArticle):
+async def create_news2(news_article: NewsArticle):
     parameters = await find_parameters(news_article.content)
 
     if parameters:
@@ -109,3 +109,47 @@ async def create_news(news_article: NewsArticle):
     # print(news_article)
     return result, news_article
 
+async def create_news(news_article: NewsArticle):
+     # Check if the news article already exists in db
+    existing_article = await news_articles_collection.find_one({"title": news_article.title})
+    # existing_article2 = await news_articles_collection2.find_one({"title": news_article.title})
+
+    # print(existing_article2)
+
+    
+    if existing_article is None:
+        # If not in db, insert into  db2
+        parameters = await find_parameters(news_article.content)
+
+        if parameters:
+            districts = locate(parameters["location"])
+            vehicle1, vehicle2, dow, tod = process_news_tokens.process_news(news_article.content, parameters["time"])
+            
+            new_params = Parameter(
+                location=parameters["location"], 
+                division=districts["division"],
+                district=districts["district"],
+                subdistrict=districts["subdistrict"],
+                time=parameters["time"],
+                dayofweek=dow,
+                timeofday=tod,
+                vehicle1=vehicle1,
+                vehicle2=vehicle2,
+                dead=parameters["dead"],
+                injured=parameters["injured"]
+            )
+            
+            news_article.parameters = new_params
+        news_article.timestamp = datetime.now()
+
+        result_db = await news_articles_collection.insert_one(news_article.dict())
+        result_db2 = await news_articles_collection2.insert_one(news_article.dict())
+        
+        return result_db2, news_article, "yes"
+    else:
+        # If already in db, do not insert into db2
+        return None, None, "no"
+
+    
+    
+   

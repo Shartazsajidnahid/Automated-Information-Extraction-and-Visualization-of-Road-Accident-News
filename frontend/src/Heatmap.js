@@ -41,8 +41,8 @@ const MapChart = () => {
           colorAxis: {
             min: 0,
             stops: [
-              [0, 'blue'],
-              [0.5, 'rgba(255, 255, 0, 0.7)'], // Less solid yellow (opacity: 0.5)
+              [0, 'green'],
+              [0.5, 'rgb(102, 0, 0)'], // Less solid yellow (opacity: 0.5)
               [1, 'red'],
             ],
           },

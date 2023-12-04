@@ -5,9 +5,9 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 import Chart from "chart.js/auto";
 import "./App.css"
 
-function PlaceChart() {
-  const [chartType, setChartType] = useState("pie");
-  const [dataOption, setDataOption] = useState("dayofweek");
+function PlaceChart({ type }) {
+  const [chartType, setChartType] = useState(type);
+  const [dataOption, setDataOption] = useState("places");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);

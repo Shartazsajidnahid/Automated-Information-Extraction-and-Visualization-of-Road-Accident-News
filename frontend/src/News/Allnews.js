@@ -17,7 +17,7 @@ function Allnews() {
   const [latestNews, setLatestNews] = useState([]);
 
   const [displayedNews, setDisplayedNews] = useState([]);
-  const [perPage, setPerPage] = useState(15);
+  const [perPage, setPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     division: "",
@@ -290,8 +290,8 @@ function Allnews() {
             ))}
           </div>
           <div className="d-flex justify-content-center m-3">
-            <button className="btn btn-secondary text-whit" onClick={handleLoadMore}>
-              Load More &nbsp;
+            <button className="btn btn-outline-success" onClick={handleLoadMore}>
+              আরও&nbsp;
               <i className="fa-solid fa-caret-down"></i>
             </button>
           </div>
