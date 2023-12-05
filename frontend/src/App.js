@@ -13,9 +13,9 @@ import SelectChartType from "./SelectChartType";
 import ViewChart from "./ViewChart";
 import SearchedNews from "./News/SearchedNews";
 import VehicleChart from "./VehicleChart";
+import Dashboard from "./VisualizeDashboard"
 import TimeChart from "./TimeChart";
-import HeatChart from "./Heatchart";
-import Dashboard from "./VisualizeDashboard";
+import Heatchart from "./Heatchart/Heatchart"
 import Heatmap from "./Heatmap";
 // import Newsdetail from "./News/Newsdetail";
 
@@ -33,12 +33,11 @@ function App() {
             <Route path="/searchednews" element={<SearchedNews />} />
             <Route path="/vehicleChart" element={<VehicleChart />} />
             <Route path="/timeChart" element={<TimeChart />} />
-            <Route path="/heatChart" element={<HeatChart/>} />
             <Route path="/visualizeDashboard" element={<Dashboard/>} />
             <Route path="/selectChartType" element={<SelectChartType />} />
+            <Route path="heat" element={<Heatchart />} />
 
-
-            <Route path="/heatmap" element={<Heatmap />} />
+            <Route path="/heatmap" element={<Heatmap height="800px" width="600px"/>} />
           </Routes>
         </div>
       </Router>

@@ -6,7 +6,16 @@ import 'highcharts/modules/exporting';
 
 HighchartsMap(Highcharts);
 
-const MapChart = () => {
+
+const MapChart = ({ height, width }) => {
+  
+  const containerStyle = {
+    
+    height: height !== undefined ? height : '800px',
+    minWidth: width !== undefined ? width : '600px',
+    maxWidth: '800px',
+    margin: '0 auto',
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,7 +79,7 @@ const MapChart = () => {
     fetchData();
   }, []); 
 
-  return <div id="container" style={{ height: '700px', minWidth: '500px', maxWidth: '800px', margin: '0 auto' }} />;
+  return <div id="container" style={containerStyle} />;
 };
 
 export default MapChart;
