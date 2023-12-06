@@ -1,18 +1,58 @@
 from fastapi import APIRouter
 from ..controllers.graphdataController import get_occurence_data
 from fastapi.responses import JSONResponse
+from .geolocations import bangladesh_district_geolocations
 
 router = APIRouter()
+
+def get_district_coordinates(district, intensity):
+    if district in bangladesh_district_geolocations:
+        coordinates = bangladesh_district_geolocations[district]
+        return coordinates + [intensity*10]
+    else:
+        return None
+
 
 @router.get("/get-data/{table_name}/{occurrence_type}")
 async def get_data(table_name: str, occurrence_type: str):
     try:
         response = await get_occurence_data(table_name, occurrence_type)
-        print(response)
         return response
         # return JSONResponse(content=respoxnse)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+@router.get("/get-heatmap-data/")
+async def get_heatmap_data(occurrence_type: str):
+    
+    try:
+        response = await get_data("district_info", occurrence_type)
+        result_array = []
+        for entry in response:
+            district_name = entry["typename"]
+            count_value = entry["count"]
+
+            result = get_district_coordinates(district_name, count_value)
+
+            if result is not None:
+                result_array.append(result)
+        return result_array
+        # return JSONResponse(content=respoxnse)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 dummy_data = [

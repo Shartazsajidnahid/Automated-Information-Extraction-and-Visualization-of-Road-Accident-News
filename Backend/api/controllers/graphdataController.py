@@ -2,13 +2,16 @@ from motor.motor_asyncio import AsyncIOMotorCollection
 from ..database import db
 from ..models.VehicleInfo import VehicleInfo
 from ..models.TimeofDayInfo import TimeofDayInfo
+from ..models.DistrictInfo import DistrictInfo
 
 model_name_mapping = {
     "vehicle_info": "VehicleInfo",
     "timeofday_info": "TimeofDayInfo",
+    "district_info": "DistrictInfo"
 }
 
 async def update_occurrence(table_name: str, type_name: str, occurrence_type: str,  count_to_add: int):
+    print("haha")
     collection = db.get_collection(table_name)
     
     existing_data = await collection.find_one({"typename": type_name})
@@ -25,8 +28,6 @@ async def update_occurrence(table_name: str, type_name: str, occurrence_type: st
 
         if model_name:
             model_class = globals().get(model_name)
-            print("haha: ")
-            print(count_to_add)
             if model_class:
                 new_data = model_class(typename=type_name)
                 setattr(new_data, occurrence_type, count_to_add)
@@ -51,3 +52,12 @@ async def get_occurence_data(table_name: str, occurrence_type: str):
     return transformed_data
 
    
+# for entry in your_array:
+#         district_name = entry["typename"]
+#         occurrence_value = entry["occurrence"]
+#         dead_value = entry["dead"]
+#         injured_value = entry["injured"]
+
+#         await update_occurrence("district_info", district_name, "occurrence", occurrence_value)
+#         await update_occurrence("district_info", district_name, "dead", dead_value)
+#         await update_occurrence("district_info", district_name, "injured", injured_value)

@@ -45,8 +45,8 @@ def scrape_all():
 
 
 async def fetch_all_news(): 
-    # await update_occurrence("vehicle_info", "সাইকেল", "dead", 1)
-    print("hey ")
+    # await update_occurrence("district_info", "জামালপুর", "occurrence", 12)
+    
     news = []
     cursor = news_articles_collection2.find({}).sort("timestamp", -1)
     async for document in cursor:
@@ -78,7 +78,7 @@ async def get_news_by_id(news_id: str):
         raise HTTPException(status_code=400, detail="Invalid ObjectId format")
 
 
-async def create_news2(news_article: NewsArticle):
+async def create_news(news_article: NewsArticle):
     parameters = await find_parameters(news_article.content)
 
     if parameters:
@@ -109,7 +109,7 @@ async def create_news2(news_article: NewsArticle):
     # print(news_article)
     return result, news_article
 
-async def create_news(news_article: NewsArticle):
+async def create_news2(news_article: NewsArticle):
      # Check if the news article already exists in db
     existing_article = await news_articles_collection.find_one({"title": news_article.title})
     # existing_article2 = await news_articles_collection2.find_one({"title": news_article.title})

@@ -46,6 +46,7 @@ async def create_news_article(news_article: NewsArticle):
     if response:
         return "created successfully "
     raise HTTPException(400, "Something went wrong")
+    
 
 @router.get("/news_by_division")
 async def get_news_by_division(division: str):
