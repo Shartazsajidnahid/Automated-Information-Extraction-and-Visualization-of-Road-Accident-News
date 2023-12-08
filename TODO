@@ -1,21 +1,17 @@
 
 
-- nihoto, ahoto
-- vehicle 1, 2
-- if "time" contains garbage, then add tod and dow to time
+- nihoto, ahoto number
+- Dashboard from backend
+- scrape daily limit
+- scrape AD cross
+
+<!-- xxx -->
+- if "time" contains garbage, then add tod and dow to time 
+- subdistrict two words
 
 
-- PKL Files
-- Country Heatmap
-
-
-- colours in UI 
-- model train data 
-- Visualization dashboard
-
-
+errors:
 - বৃহস্পতিবার দিন 
-
 
 - predictive analysis:
     1)regression: dead and injured number 

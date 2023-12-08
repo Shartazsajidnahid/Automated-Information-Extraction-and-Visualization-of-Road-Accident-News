@@ -54,4 +54,6 @@ def get_vehicles(news_article):
     return vehicles_involved
 
 
+
+
 # print(get_vehicles("ময়মনসিংহের তারাকান্দা কারের উপজেলার কাশিগঞ্জ বাজারে ট্রাকচাপায় সিএনজিচালিত অটোরিকশার তিনজন যাত্রী মারা গেছেন। ট্রেনটির"))
