@@ -11,7 +11,7 @@ model_name_mapping = {
 }
 
 async def update_occurrence(table_name: str, type_name: str, occurrence_type: str,  count_to_add: int):
-    print("haha")
+    
     collection = db.get_collection(table_name)
     
     existing_data = await collection.find_one({"typename": type_name})

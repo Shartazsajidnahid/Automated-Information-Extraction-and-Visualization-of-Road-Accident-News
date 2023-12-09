@@ -25,7 +25,27 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     { typename: "বান্দরবান", count: 34 },
     { typename: "ময়মনসিংহ", count: 8 },
     { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 }
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাকা", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "ময়মনসিংহ", count: 8 },
+    { typename: "কক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাকা", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "ময়মনসিংহ", count: 8 },
+    { typename: "কক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাক", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "য়মনসিংহ", count: 8 },
+    { typename: "ক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢকা", count: 12 },
+    { typename: "বান্দরবন", count: 34 },
+    { typename: "ময়মসিংহ", count: 8 },
+    { typename: "কক্সবজার", count: 15 },
+    { typename: "সিলে", count: 22 }
 ];
 
   const dayOfWeekData = [

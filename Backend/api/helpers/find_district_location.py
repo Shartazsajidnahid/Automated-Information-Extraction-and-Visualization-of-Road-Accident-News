@@ -171,7 +171,12 @@ def find_location_in_bangladesh(location_name):
             }
     return result
 
+def replace_hyphens_with_space(input_string):
+    return input_string.replace('-', ' ')
+
+
 def locate(location_str):
+    location_str = replace_hyphens_with_space(location_str)
     final_loc = {
                 "subdistrict": "",
                 "district": "",

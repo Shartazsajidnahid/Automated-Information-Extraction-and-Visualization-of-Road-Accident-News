@@ -3,12 +3,14 @@
 - Dashboard from backend
 - scrape daily limit
 
-<!-- xxx -->
-- subdistrict two words
+- rajdhani = dhaka 
+- 
 
 
 errors:
 - বৃহস্পতিবার দিন 
+- Failed to execute 'getImageData' on 'CanvasRenderingContext2D': The source width is 0.
+- এক বৃদ্ধা ও একজন শ্রমিকের মৃত্যু
 
 - predictive analysis:
     1)regression: dead and injured number 

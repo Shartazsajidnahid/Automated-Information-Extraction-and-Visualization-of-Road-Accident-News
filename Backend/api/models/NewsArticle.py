@@ -11,8 +11,8 @@ class Parameter(BaseModel):
     timeofday: str = ""
     vehicle1: str = ""
     vehicle2: str = ""
-    dead: str = "Example Dead"
-    injured: str = "Example Injured"
+    dead: int = 0
+    injured: int = 0
 
 class NewsArticle(BaseModel):
     title: str

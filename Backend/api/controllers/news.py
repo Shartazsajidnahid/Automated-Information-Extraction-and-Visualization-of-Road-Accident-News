@@ -6,7 +6,7 @@ from ..models.NewsArticle import NewsArticle, Parameter
 from bson import ObjectId 
 from ..helpers.bangla_transform import find_parameters
 from ..helpers.find_district_location import locate
-from ..helpers import process_news_tokens
+from ..helpers import process_news_tokens, deadinjured_functions
 from datetime import datetime
 from ..controllers.graphdataController import update_occurrence
 
@@ -80,11 +80,14 @@ async def get_news_by_id(news_id: str):
 
 async def create_news(news_article: NewsArticle):
     parameters = await find_parameters(news_article.content)
-
+    
     if parameters:
         districts = locate(parameters["location"])
         vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
-        
+        deadno = deadinjured_functions.find_dead_injured(news_article.content, "নিহত", parameters["dead"], parameters["injured"])
+        print("deadno: ", deadno)
+        injuredno = deadinjured_functions.find_dead_injured(news_article.content, "আহত",parameters["injured"], parameters["dead"])
+        print("injuredno: " , injuredno)
         new_params = Parameter(
             location=parameters["location"], 
             division = districts["division"],
@@ -95,8 +98,8 @@ async def create_news(news_article: NewsArticle):
             timeofday = tod,
             vehicle1 = vehicle1,
             vehicle2 = vehicle2,
-            dead = parameters["dead"],
-            injured = parameters["injured"]
+            dead = int(deadno),
+            injured = int(injuredno)
              )
         # print(new_params)
         # print(vehicles)
@@ -105,7 +108,7 @@ async def create_news(news_article: NewsArticle):
     # print(news_article) 
     
     news_article.timestamp=datetime.now();
-    # result = await news_articles_collection.insert_one(news_article.dict())
+    result = await news_articles_collection.insert_one(news_article.dict())
     # print(news_article)
     return news_article
 

@@ -44,9 +44,12 @@ function Allnews() {
     });
   }, [apiBaseUrl]);
 
-  const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength) + "...";
+  const truncateText = (text, title, maxLength) => {
+    if (text.length + title.length > maxLength) {
+      const extra = text.length + title.length - maxLength;
+      const length = text.length-extra;
+      console.log(length);
+      return text.substring(0, text.length-extra) + "...";
     }
     return text;
   };
@@ -275,7 +278,7 @@ function Allnews() {
                       <>{newsItem?.title}</>
                     </h5>
                     <p className="card-text small">
-                      {truncateText(newsItem?.content, 100)}
+                      {truncateText(newsItem?.content, newsItem?.title, 150)}
                     </p>
                     <Link
                       to={`/news-article/${newsItem?._id}`}
