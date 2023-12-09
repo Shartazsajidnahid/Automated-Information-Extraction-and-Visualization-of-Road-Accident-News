@@ -44,7 +44,7 @@ async def create_news_article(news_article: NewsArticle):
     response = await create_news(news_article)
     print({"response":response})
     if response:
-        return "created successfully "
+        return  response
     raise HTTPException(400, "Something went wrong")
     
 

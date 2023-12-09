@@ -8,7 +8,7 @@ import "./App.css"
 function VehileChart({type}) {
   const [chartType, setChartType] = useState(type);
   const [dataOption, setDataOption] = useState("vehicles");
-  // const [vehicleData, setvehicleData] = useState([]);
+  const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
@@ -19,13 +19,7 @@ function VehileChart({type}) {
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
-const vehicleData = [
-  { typename: "বাস", count: 50 },
-  { typename: "কার", count: 13 },
-  { typename: "মাইক্রো", count: 15 },
-  { typename: "মোটরসাইকেল", count: 40 },
-  { typename: "ট্রাক", count: 32 }
-];
+
   const placeData = [
     { typename: "ঢাকা", count: 12 },
     { typename: "বান্দরবান", count: 34 },
@@ -57,16 +51,16 @@ const vehicleData = [
     timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
   };
 
-  // useEffect(() => {
-  //   // Fetch vehicleData
-  //   axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
-  //     .then((response) => {
-  //       setvehicleData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, [apiBaseUrl, table_name, occurrence_type]);
+  useEffect(() => {
+    // Fetch vehicleData
+    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
+      .then((response) => {
+        setvehicleData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [apiBaseUrl, table_name, occurrence_type]);
   
   useEffect(() => {
     if (chartRef.current) {
@@ -88,7 +82,7 @@ const vehicleData = [
   const updateChart = (selectedChartType, selectedDataOption) => {
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
-
+    
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
 

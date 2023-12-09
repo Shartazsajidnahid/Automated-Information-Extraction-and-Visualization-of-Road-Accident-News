@@ -107,7 +107,7 @@ async def create_news(news_article: NewsArticle):
     news_article.timestamp=datetime.now();
     result = await news_articles_collection.insert_one(news_article.dict())
     # print(news_article)
-    return result, news_article
+    return news_article
 
 async def create_news2(news_article: NewsArticle):
      # Check if the news article already exists in db
