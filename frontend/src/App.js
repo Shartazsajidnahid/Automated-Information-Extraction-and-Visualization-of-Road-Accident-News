@@ -21,27 +21,27 @@ import Heatmap from "./Heatmap";
 
 function App() {
   return (
-    // <Demo></Demo>
-    <>
-      <Router>
-        <Navbar></Navbar>
-        <div>
-          <Routes>
-            <Route path="/allnews" element={<Allnews />} />
-            <Route path="/" element={<Allnews />} />
-            <Route path="/news-article/:id" element={<NewsArticleDetails />} />
-            <Route path="/searchednews" element={<SearchedNews />} />
-            <Route path="/vehicleChart" element={<VehicleChart />} />
-            <Route path="/timeChart" element={<TimeChart />} />
-            <Route path="/visualizeDashboard" element={<Dashboard/>} />
-            <Route path="/selectChartType" element={<SelectChartType />} />
-            <Route path="heat" element={<Heatchart />} />
+    <Demo></Demo>
+    // <>
+    //   <Router>
+    //     <Navbar></Navbar>
+    //     <div>
+    //       <Routes>
+    //         <Route path="/allnews" element={<Allnews />} />
+    //         <Route path="/" element={<Allnews />} />
+    //         <Route path="/news-article/:id" element={<NewsArticleDetails />} />
+    //         <Route path="/searchednews" element={<SearchedNews />} />
+    //         <Route path="/vehicleChart" element={<VehicleChart />} />
+    //         <Route path="/timeChart" element={<TimeChart />} />
+    //         <Route path="/visualizeDashboard" element={<Dashboard/>} />
+    //         <Route path="/selectChartType" element={<SelectChartType />} />
+    //         <Route path="heat" element={<Heatchart />} />
 
-            <Route path="/heatmap" element={<Heatmap height="800px" width="600px"/>} />
-          </Routes>
-        </div>
-      </Router>
-    </>
+    //         <Route path="/heatmap" element={<Heatmap height="800px" width="600px"/>} />
+    //       </Routes>
+    //     </div>
+    //   </Router>
+    // </>
   );
 }
 

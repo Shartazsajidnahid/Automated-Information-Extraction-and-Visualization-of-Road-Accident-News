@@ -1,12 +1,9 @@
 
 
-- nihoto, ahoto number
 - Dashboard from backend
 - scrape daily limit
-- scrape AD cross
 
 <!-- xxx -->
-- if "time" contains garbage, then add tod and dow to time 
 - subdistrict two words
 
 
@@ -17,3 +14,9 @@ errors:
     1)regression: dead and injured number 
     2)classify: if dead or injured
     
+
+done:
+- scrape AD cross
+- nihoto, ahoto number
+- if "time" contains garbage, then add tod and dow to time 
+

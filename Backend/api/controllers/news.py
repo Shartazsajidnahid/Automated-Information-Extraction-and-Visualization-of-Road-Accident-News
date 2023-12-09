@@ -83,14 +83,14 @@ async def create_news(news_article: NewsArticle):
 
     if parameters:
         districts = locate(parameters["location"])
-        vehicle1, vehicle2, dow, tod = process_news_tokens.process_news(news_article.content, parameters["time"])
+        vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
         
         new_params = Parameter(
             location=parameters["location"], 
             division = districts["division"],
             district = districts["district"],
             subdistrict = districts["subdistrict"],
-            time = parameters["time"],
+            time = newtime,
             dayofweek = dow,
             timeofday = tod,
             vehicle1 = vehicle1,
@@ -105,7 +105,7 @@ async def create_news(news_article: NewsArticle):
     # print(news_article) 
     
     news_article.timestamp=datetime.now();
-    result = await news_articles_collection.insert_one(news_article.dict())
+    # result = await news_articles_collection.insert_one(news_article.dict())
     # print(news_article)
     return news_article
 

@@ -23,12 +23,13 @@ def get_time(sentence):
     if functions.get_week_day(sentence)['result'] and not dowfound:
         dowfound = True
         dow = functions.get_week_day(sentence)['dow']
+    
     # Time of Day
     if functions.get_dayornight(sentence)['result'] and not todfound:
         todfound = True    
         tod = functions.get_dayornight(sentence)['tod']
 
-
+    
 def process_news(news, time_from_model):
     global dowfound, todfound, dow, tod
     vehicle1 = ""
@@ -38,22 +39,21 @@ def process_news(news, time_from_model):
 
     vehicles = functions.get_vehicles(news)
 
-    print(vehicles)
     if len(vehicles) >= 2:
         vehicle1 = vehicles[0]
         vehicle2 = vehicles[1]
     elif len(vehicles) ==1: 
         vehicle1 = vehicles[0]
         
-    #get time from model_time
+    # get time from model_time
     get_time(time_from_model)
 
-    #if time not found from model_time
+    # if time not found from model_time
     if not dowfound or not todfound:
         for sentence in sentence_tokens:
             get_time(sentence)
             if dowfound and todfound:
+                time_from_model = dow + " " + tod
                 break
     
-    return vehicle1, vehicle2, dow, tod
-    return {"vehicles":vehicles, "dow": dow, "tod": tod}
+    return vehicle1, vehicle2, dow, tod, time_from_model
