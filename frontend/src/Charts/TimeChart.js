@@ -7,62 +7,78 @@ import "../App.css"
 
 function TimeChart({ type }) {
   const [chartType, setChartType] = useState(type);
-  const [dataOption, setDataOption] = useState("dayofweek");
-  const [vehicleData, setvehicleData] = useState([]);
+  const [dataOption, setDataOption] = useState("occurrence");
+  const [occurrencedata, setOccurrencedata] = useState([]);
+  const [deathdata, setDeathdata] = useState([]);
+  const [injurydata, setInjurydata] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
-  const table_name = "vehicle_info";
+  const table_name = "timeofday_info";
   const occurrence_type = "occurrence";
+  const death_type = "dead";
+  const injury_type = "injured";
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
-
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-
-
-  const placeData = [
-    { typename: "ঢাকা", count: 12 },
-    { typename: "বান্দরবান", count: 34 },
-    { typename: "ময়মনসিংহ", count: 8 },
-    { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 }
-];
-
-  const dayOfWeekData = [
-    { typename: "রবিবার", count: 9 },
-    { typename: "সোমবার", count: 8 },
-    { typename: "মঙ্গলবার", count: 5 },
-    { typename: "বুধবার", count: 7 },
-    { typename: "বৃহস্পতিবার", count: 12 },
-    { typename: "শুক্রবার", count: 3 },
-    { typename: "শনিবার", count: 10 }
-    
-  ];
-
-  const timeofDayData = [
-    { typename: "দিন", count: 4 },
-    { typename: "রাত", count: 11 },
-  ];
 
   const dataOptions = {
-    vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "typename" },
-    places: { data: placeData, label: "Place Occurrences", key: "typename" },
-    dayofweek: { data: dayOfWeekData, label: "Occurrences", key: "typename" },
-    timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
+    occurrence: { data: occurrencedata, label: "Vehicle Occurrence", key: "typename" },
+    injury: { data: injurydata, label: "Vehicle Occurrence", key: "typename" },
+    death: { data: deathdata, label: "Vehicle Occurrence", key: "typename" },
   };
 
-  // useEffect(() => {
-  //   // Fetch vehicleData
-  //   axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
-  //     .then((response) => {
-  //       setvehicleData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, [apiBaseUrl, table_name, occurrence_type]);
-  
   useEffect(() => {
+    // console.log("yes yes ");
+    // console.log(vehicledata);
+    // updateChart(chartType ,dataOption);
+    updateChartAsync();
+  }, [occurrencedata, injurydata, deathdata])
+  
+  const fetchOccurrenceData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${occurrence_type}`)
+      .then((response) => {
+        setOccurrencedata(response.data);
+        // console.log(vehicledata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchDeathData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${death_type}`)
+      .then((response) => {
+        setDeathdata(response.data);
+        // console.log(vehicledata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchInjuryData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${injury_type}`)
+      .then((response) => {
+        console.log("injury: ");
+        console.log(response.data);
+        setInjurydata(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchOccurrenceData();
+    fetchDeathData();
+    fetchInjuryData();
+  }, []);
+
+  const updateChartAsync = async () => {
     if (chartRef.current) {
       if (myChartRef.current) {
         myChartRef.current.destroy();
@@ -75,11 +91,17 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           responsive: true,
         },
       });
-      updateChart(chartType, dataOption);
     }
-  }, [chartType, dataOption, vehicleData]);
+    updateChart(chartType, dataOption)
+  };
+
+  useEffect(() => {
+    
+    updateChartAsync();
+  }, [chartType, dataOption, occurrencedata]);
   
   const updateChart = (selectedChartType, selectedDataOption) => {
+    
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
     // console.log("time: ");
@@ -109,7 +131,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center ">Time</h2>
+              <h5 className="text-center ">Time of Day</h5>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -140,10 +162,9 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
                       updateChart(chartType, selectedDataOption);
                     }}
                   >
-                    <option value="vehicles">Vehicles</option>
-                    <option value="places">Places</option>
-                    <option value="dayofweek">Weekdays</option>
-                    <option value="timeofday">Time of Day</option>
+                  <option value="occurrence">Occurrences</option>
+                  <option value="injury">Injuries</option>
+                  <option value="death">Deaths</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
