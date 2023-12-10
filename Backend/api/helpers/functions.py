@@ -1,7 +1,7 @@
 from ..helpers import little_stem
 # import little_stem
 
-bangla_days = ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার"]
+bangla_days = ["শনিবার", "রবিবার", "রোববার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার"]
 
 day_indicator = ["ভোর", "সকাল", "দুপুর", "বেলা", "বিকাল", "বিকেল"]
 night_indicator = ["রাত", "সন্ধ্যা"]
@@ -11,8 +11,10 @@ vehicle_types = ["মোটরসাইকেল", "সাইকেল", "বা
 def get_week_day(sentence):
     for day in bangla_days:
         if day in sentence:
-            return {"result": True, "dow": day}
-    return {"result": False, "dow": ""}
+            if day == "রোববার":
+                return True, "রবিবার"
+            return True, day
+    return False, ""
     
 def get_dayornight(sentence):
     words = sentence.split()
@@ -20,16 +22,16 @@ def get_dayornight(sentence):
     for pattern in day_indicator:
         if any(word.startswith(pattern) for word in words):
         # if pattern in sentence:
-            return {"result": True, "tod": "দিন"}
+            return True, "দিন"
 
     for pattern in night_indicator:
         if any(word.startswith(pattern) for word in words):
         # if pattern in sentence:
             # print(pattern )
             # print(sentence)
-            return {"result": True, "tod": "রাত"}
+            return   True,  "রাত"
 
-    return {"result": False, "tod": ""}
+    return False, ""
 
 def get_vehicles(news_article):
     vehicles_involved = []

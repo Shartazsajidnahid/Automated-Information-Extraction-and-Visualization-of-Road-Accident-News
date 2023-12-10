@@ -18,16 +18,22 @@ news = "বরগুনার পাথরঘাটা উপজেলায় থ
 def get_time(sentence):
     global dowfound, todfound, dow, tod 
     # words = bn.word_tokenize(sentence)
+    print(sentence)
+    print("")
+    dresult, doww = functions.get_week_day(sentence)
+    print(dresult, " ", doww,)
 
     # Day of Week
-    if functions.get_week_day(sentence)['result'] and not dowfound:
+    if dresult and not dowfound:
         dowfound = True
-        dow = functions.get_week_day(sentence)['dow']
+        dow = doww
     
+    tresult, todd =functions.get_dayornight(sentence)
     # Time of Day
-    if functions.get_dayornight(sentence)['result'] and not todfound:
+    if tresult and not todfound:
+        print(tresult, " ", todd)
         todfound = True    
-        tod = functions.get_dayornight(sentence)['tod']
+        tod = todd
 
     
 def process_news(news, time_from_model):
@@ -48,12 +54,17 @@ def process_news(news, time_from_model):
     # get time from model_time
     get_time(time_from_model)
 
+    modelnotgood = False
     # if time not found from model_time
     if not dowfound or not todfound:
+        modelnotgood = True
         for sentence in sentence_tokens:
             get_time(sentence)
             if dowfound and todfound:
-                time_from_model = dow + " " + tod
                 break
+
+    if modelnotgood:
+        time_from_model = dow + " " + tod
+    
     
     return vehicle1, vehicle2, dow, tod, time_from_model
