@@ -15,7 +15,7 @@ function PlaceChart({ type }) {
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
-  const table_name = "timeofday_info";
+  const table_name = "district_info";
   const occurrence_type = "occurrence";
   const death_type = "dead";
   const injury_type = "injured";

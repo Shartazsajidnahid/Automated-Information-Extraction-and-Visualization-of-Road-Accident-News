@@ -18,7 +18,9 @@ news_articles_collection2 = db2["news_articles"]
 
 vehicle_info_collection = db["vehicle_info"]
 timeofday_info_collection = db["timeofday_info"]
+dayofweek_info_collection = db["dayofweek_info"]
 district_info_collection = db["district_info"]
+division_info_collecion = db["division_info"]
 
 
 def get_collection(collection_name: str):

@@ -8,7 +8,7 @@ from ..helpers.bangla_transform import find_parameters
 from ..helpers.find_district_location import locate
 from ..helpers import process_news_tokens, deadinjured_functions
 from datetime import datetime
-from ..controllers.graphdataController import update_occurrence
+from ..controllers.graphdataController import updateGraphData
 
 url1 = 'https://en.prothomalo.com/'
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
@@ -48,7 +48,7 @@ async def fetch_all_news():
     # await update_occurrence("district_info", "জামালপুর", "occurrence", 12)
     
     news = []
-    cursor = news_articles_collection2.find({}).sort("timestamp", -1)
+    cursor = news_articles_collection.find({}).sort("timestamp", -1)
     async for document in cursor:
         document['_id'] = str(document['_id'])
         news.append(document)
@@ -85,9 +85,8 @@ async def create_news(news_article: NewsArticle):
         districts = locate(parameters["location"])
         vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
         deadno = deadinjured_functions.find_dead_injured(news_article.content, "নিহত", parameters["dead"], parameters["injured"])
-        print("deadno: ", deadno)
         injuredno = deadinjured_functions.find_dead_injured(news_article.content, "আহত",parameters["injured"], parameters["dead"])
-        print("injuredno: " , injuredno)
+        print("injuredno: " , )
         new_params = Parameter(
             location=parameters["location"], 
             division = districts["division"],
@@ -105,11 +104,12 @@ async def create_news(news_article: NewsArticle):
         # print(vehicles)
         news_article.parameters = new_params
     
-    # print(news_article) 
     
     news_article.timestamp=datetime.now();
     result = await news_articles_collection.insert_one(news_article.dict())
-    # print(news_article)
+
+    await updateGraphData(news_article)
+
     return news_article
 
 async def create_news2(news_article: NewsArticle):
