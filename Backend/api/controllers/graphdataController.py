@@ -92,9 +92,6 @@ async def highchartData():
     ]
 
     divisiondata = await get_occurence_data("division_info", "occurrence")
-    
-    # for item in divisiondata:
-    #     print(item)
 
     for item in divisiondata:    #ময়মনসিংহ   
         if item.get('typename') == "ঢাকা": 
@@ -114,7 +111,6 @@ async def highchartData():
         elif item.get('typename') == "ময়মনসিংহ": 
             demo_data[0][1] += item.get('count')
             
-    
     return demo_data
 
 

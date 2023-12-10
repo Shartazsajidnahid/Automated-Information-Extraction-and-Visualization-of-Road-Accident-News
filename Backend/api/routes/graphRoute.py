@@ -8,7 +8,7 @@ router = APIRouter()
 def get_district_coordinates(district, intensity):
     if district in bangladesh_district_geolocations:
         coordinates = bangladesh_district_geolocations[district]
-        return coordinates + [intensity*10]
+        return coordinates + [intensity*100]
     else:
         return None
 
@@ -32,6 +32,7 @@ async def get_data(table_name: str):
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
+
 @router.get("/get-heatmap-data/")
 async def get_heatmap_data(occurrence_type: str):
     
@@ -46,6 +47,8 @@ async def get_heatmap_data(occurrence_type: str):
 
             if result is not None:
                 result_array.append(result)
+        # for item in result_array:
+        #     print(item)
         return result_array
         # return JSONResponse(content=respoxnse)
     except Exception as e:
