@@ -13,8 +13,8 @@ def get_district_coordinates(district, intensity):
         return None
 
 
-@router.get("/get-data/{table_name}/{occurrence_type}")
-async def get_data(table_name: str, occurrence_type: str):
+@router.get("/get-data-by-type/")
+async def get_data_by_type(table_name: str, occurrence_type: str):
     try:
         response = await get_occurence_data(table_name, occurrence_type)
         return response
@@ -23,11 +23,20 @@ async def get_data(table_name: str, occurrence_type: str):
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
+@router.get("/get-data/")
+async def get_data(table_name: str):
+    try:
+        response = await get_occurence_data(table_name, "occurrence")
+        return response
+        # return JSONResponse(content=respoxnse)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
 @router.get("/get-heatmap-data/")
 async def get_heatmap_data(occurrence_type: str):
     
     try:
-        response = await get_data("district_info", occurrence_type)
+        response = await get_data_by_type("district_info", occurrence_type)
         result_array = []
         for entry in response:
             district_name = entry["typename"]

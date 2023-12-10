@@ -10,11 +10,10 @@ import NewsArticleDetails from "./News/NewsArticleDetails";
 import Demo from "./Demo";
 import Navbar from "./Navbar";
 import SelectChartType from "./SelectChartType";
-import ViewChart from "./ViewChart";
 import SearchedNews from "./News/SearchedNews";
-import VehicleChart from "./VehicleChart";
+import VehicleChart from "./Charts/VehicleChart";
 import Dashboard from "./VisualizeDashboard"
-import TimeChart from "./TimeChart";
+import TimeChart from "./Charts/TimeChart";
 import Heatchart from "./Heatchart/Heatchart"
 import Heatmap from "./Heatmap";
 // import Newsdetail from "./News/Newsdetail";
@@ -31,7 +30,7 @@ function App() {
             <Route path="/" element={<Allnews />} />
             <Route path="/news-article/:id" element={<NewsArticleDetails />} />
             <Route path="/searchednews" element={<SearchedNews />} />
-            <Route path="/vehicleChart" element={<VehicleChart />} />
+            <Route path="/vehicleChart" element={<VehicleChart type="bar"/>} />
             <Route path="/timeChart" element={<TimeChart />} />
             <Route path="/visualizeDashboard" element={<Dashboard/>} />
             <Route path="/selectChartType" element={<SelectChartType />} />

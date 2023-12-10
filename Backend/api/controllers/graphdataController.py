@@ -13,7 +13,6 @@ model_name_mapping = {
 async def update_occurrence(table_name: str, type_name: str, occurrence_type: str,  count_to_add: int):
     
     collection = db.get_collection(table_name)
-    
     existing_data = await collection.find_one({"typename": type_name})
 
     if existing_data:
@@ -33,7 +32,6 @@ async def update_occurrence(table_name: str, type_name: str, occurrence_type: st
                 setattr(new_data, occurrence_type, count_to_add)
                 print(new_data)
                 await collection.insert_one(new_data.dict())
-
             else:
                 print(f"Model {model_name} not found.")
         else:

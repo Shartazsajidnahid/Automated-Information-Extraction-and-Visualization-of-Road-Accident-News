@@ -3,86 +3,68 @@ import axios from "axios";
 import { Form, Container, Row, Col } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
-import "./App.css"
+import "../App.css"
 
-function PlaceChart({ type }) {
+function VehileChart({type}) {
   const [chartType, setChartType] = useState(type);
-  const [dataOption, setDataOption] = useState("places");
-  const [vehicleData, setvehicleData] = useState([]);
+  const [dataOption, setDataOption] = useState("vehicles");
+  const [vehicledata, setVehicledata] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
   const table_name = "vehicle_info";
   const occurrence_type = "occurrence";
-
-
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 
-  const placeData = [
-    { typename: "ঢাকা", count: 12 },
-    { typename: "বান্দরবান", count: 34 },
-    { typename: "ময়মনসিংহ", count: 8 },
-    { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 },
-    { typename: "ঢাকা", count: 12 },
-    { typename: "বান্দরবান", count: 34 },
-    { typename: "ময়মনসিংহ", count: 8 },
-    { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 },
-    { typename: "ঢাকা", count: 12 },
-    { typename: "বান্দরবান", count: 34 },
-    { typename: "ময়মনসিংহ", count: 8 },
-    { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 },
-    { typename: "ঢাক", count: 12 },
-    { typename: "বান্দরবান", count: 34 },
-    { typename: "য়মনসিংহ", count: 8 },
-    { typename: "ক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 },
-    { typename: "ঢকা", count: 12 },
-    { typename: "বান্দরবন", count: 34 },
-    { typename: "ময়মসিংহ", count: 8 },
-    { typename: "কক্সবজার", count: 15 },
-    { typename: "সিলে", count: 22 }
-];
-
-  const dayOfWeekData = [
-    { typename: "রবিবার", count: 9 },
-    { typename: "সোমবার", count: 8 },
-    { typename: "মঙ্গলবার", count: 5 },
-    { typename: "বুধবার", count: 7 },
-    { typename: "বৃহস্পতিবার", count: 12 },
-    { typename: "শুক্রবার", count: 3 },
-    { typename: "শনিবার", count: 10 }
-    
-  ];
-
-  const timeofDayData = [
-    { typename: "দিন", count: 4 },
-    { typename: "রাত", count: 11 },
-  ];
-
   const dataOptions = {
-    vehicles: { data: vehicleData, label: "Vehicle Occurrence", key: "typename" },
-    places: { data: placeData, label: "Place Occurrences", key: "typename" },
-    dayofweek: { data: dayOfWeekData, label: "Occurrences", key: "typename" },
-    timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
+    vehicles: { data: vehicledata, label: "Vehicle Occurrence", key: "typename" },
   };
 
   useEffect(() => {
-    // Fetch vehicleData
-    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
+    // console.log("yes yes ");
+    // console.log(vehicledata);
+    // updateChart(chartType ,dataOption);
+    updateChartAsync();
+  }, [vehicledata])
+
+  useEffect(() => {
+    // Fetch vehicledata
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apiBaseUrl}/graphchart/get-data?table_name=${table_name}`);
+        console.log(response.data);
+        setVehicledata(["{typename: 'মোটরসাইকেল', count: 5}"],...response.data);
+        console.log(vehicledata);
+    
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if(vehicledata.length <= 0){
+      fetchData();
+      // updateChart(chartType, dataOption);
+    }
+  }, [apiBaseUrl, table_name]);
+  
+  const fetchData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data?table_name=${table_name}`)
       .then((response) => {
-        setvehicleData(response.data);
+        setVehicledata(response.data);
+        // console.log(vehicledata);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.log(error);
       });
-  }, [apiBaseUrl, table_name, occurrence_type]);
-  
+  };
+
   useEffect(() => {
+    fetchData();
+  }, []);
+  const updateChartAsync = async () => {
     if (chartRef.current) {
       if (myChartRef.current) {
         myChartRef.current.destroy();
@@ -95,17 +77,24 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           responsive: true,
         },
       });
-      updateChart(chartType, dataOption);
     }
-  }, [chartType, dataOption, vehicleData]);
+    updateChart(chartType, dataOption)
+  };
+
+  useEffect(() => {
+    
+    updateChartAsync();
+  }, [chartType, dataOption, vehicledata]);
   
   const updateChart = (selectedChartType, selectedDataOption) => {
+    
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
-
+    console.log("update: ");
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
-
+    console.log(labels);
+    console.log(counts);
     let backgroundColors, border;
 
     if (selectedChartType === "pie") {
@@ -114,7 +103,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     } else {
       // For other chart types (e.g., bar, line), use your specified colors
       const colors = [
-        "rgba(91, 8, 136,0.7)", // Dark Red
+        "rgba(117, 14, 33, 0.8)", // Dark Red
         // 'rgba(0, 100, 0, 0.7)', // Dark Green
         // 'rgba(0, 0, 139, 0.7)', // Dark Blue
       ];
@@ -144,7 +133,6 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
         },
       ],
     };
-
     myChartRef.current.config.type = selectedChartType;
     myChartRef.current.update();
   };
@@ -156,7 +144,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center">Places</h2>
+              <h2 className="text-center ">Vehicle</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -201,12 +189,10 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       <Row className="justify-content-center mt-4">
         <Col md={12}>
         <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
-        {/* <canvas ref={chartRef} width="1000" height="230"></canvas> */}
-
         </Col>
       </Row>
     </Container>
   );
 }
 
-export default PlaceChart;
+export default VehileChart;

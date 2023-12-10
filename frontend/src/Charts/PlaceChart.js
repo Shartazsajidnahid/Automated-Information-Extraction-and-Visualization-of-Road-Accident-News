@@ -3,11 +3,11 @@ import axios from "axios";
 import { Form, Container, Row, Col } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
-import "./App.css"
+import "../App.css"
 
-function TimeChart({ type }) {
+function PlaceChart({ type }) {
   const [chartType, setChartType] = useState(type);
-  const [dataOption, setDataOption] = useState("dayofweek");
+  const [dataOption, setDataOption] = useState("places");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
@@ -25,7 +25,27 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     { typename: "বান্দরবান", count: 34 },
     { typename: "ময়মনসিংহ", count: 8 },
     { typename: "কক্সবাজার", count: 15 },
-    { typename: "সিলেট", count: 22 }
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাকা", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "ময়মনসিংহ", count: 8 },
+    { typename: "কক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাকা", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "ময়মনসিংহ", count: 8 },
+    { typename: "কক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢাক", count: 12 },
+    { typename: "বান্দরবান", count: 34 },
+    { typename: "য়মনসিংহ", count: 8 },
+    { typename: "ক্সবাজার", count: 15 },
+    { typename: "সিলেট", count: 22 },
+    { typename: "ঢকা", count: 12 },
+    { typename: "বান্দরবন", count: 34 },
+    { typename: "ময়মসিংহ", count: 8 },
+    { typename: "কক্সবজার", count: 15 },
+    { typename: "সিলে", count: 22 }
 ];
 
   const dayOfWeekData = [
@@ -86,18 +106,44 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
 
+    let backgroundColors, border;
+
+    if (selectedChartType === "pie") {
+      // For Pie chart, let Chart.js use its default colors
+      backgroundColors = undefined;
+    } else {
+      // For other chart types (e.g., bar, line), use your specified colors
+      const colors = [
+        "rgba(91, 8, 136,0.7)"
+      ];
+
+      backgroundColors = counts.map((count, index) => {
+        const colorIndex = index % colors.length;
+        return colors[colorIndex];
+      });
+    }
+
+    if (selectedChartType === "line") {
+        // For Pie chart, let Chart.js use its default colors
+        border = 3;
+    } else{
+        border = undefined;
+    }
+  
     chartDataRef.current = {
       labels: labels,
       datasets: [
         {
           label: dataOptions[selectedDataOption].label,
           data: counts,
-          borderWidth: 2,
+          borderWidth: border,
+          backgroundColor: backgroundColors,
+          borderJoinStyle: 'miter'
         },
       ],
     };
 
-    myChartRef.current.config.type = selectedChartType; // Update the chart type
+    myChartRef.current.config.type = selectedChartType;
     myChartRef.current.update();
   };
 
@@ -108,7 +154,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center ">Time</h2>
+              <h2 className="text-center">Places</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -153,7 +199,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       <Row className="justify-content-center mt-4">
         <Col md={12}>
         <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
-        {/* <canvas ref={chartRef} width="1000" height="300"></canvas> */}
+        {/* <canvas ref={chartRef} width="1000" height="230"></canvas> */}
 
         </Col>
       </Row>
@@ -161,4 +207,4 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   );
 }
 
-export default TimeChart;
+export default PlaceChart;

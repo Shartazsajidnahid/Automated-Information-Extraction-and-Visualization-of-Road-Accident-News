@@ -3,11 +3,11 @@ import axios from "axios";
 import { Form, Container, Row, Col } from "react-bootstrap";
 // import { useNavigate } from "react-router-dom";
 import Chart from "chart.js/auto";
-import "./App.css"
+import "../App.css"
 
-function VehileChart({type}) {
+function TimeChart({ type }) {
   const [chartType, setChartType] = useState(type);
-  const [dataOption, setDataOption] = useState("vehicles");
+  const [dataOption, setDataOption] = useState("dayofweek");
   const [vehicleData, setvehicleData] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
@@ -51,16 +51,16 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     timeofday: { data: timeofDayData, label: "Occurrences", key: "typename" },
   };
 
-  useEffect(() => {
-    // Fetch vehicleData
-    axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
-      .then((response) => {
-        setvehicleData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [apiBaseUrl, table_name, occurrence_type]);
+  // useEffect(() => {
+  //   // Fetch vehicleData
+  //   axios.get(`${apiBaseUrl}/graphchart/get-data/${table_name}/${occurrence_type}`)
+  //     .then((response) => {
+  //       setvehicleData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, [apiBaseUrl, table_name, occurrence_type]);
   
   useEffect(() => {
     if (chartRef.current) {
@@ -82,50 +82,23 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   const updateChart = (selectedChartType, selectedDataOption) => {
     const selectedData = dataOptions[selectedDataOption].data;
     const labelKey = dataOptions[selectedDataOption].key;
-    
+    // console.log("time: ");
+    // console.log(selectedData);
     const labels = selectedData.map((item) => item[labelKey]);
     const counts = selectedData.map((item) => item.count);
 
-    let backgroundColors, border;
-
-    if (selectedChartType === "pie") {
-      // For Pie chart, let Chart.js use its default colors
-      backgroundColors = undefined;
-    } else {
-      // For other chart types (e.g., bar, line), use your specified colors
-      const colors = [
-        "rgba(117, 14, 33, 0.8)", // Dark Red
-        // 'rgba(0, 100, 0, 0.7)', // Dark Green
-        // 'rgba(0, 0, 139, 0.7)', // Dark Blue
-      ];
-
-      backgroundColors = counts.map((count, index) => {
-        const colorIndex = index % colors.length;
-        return colors[colorIndex];
-      });
-    }
-
-    if (selectedChartType === "line") {
-        // For Pie chart, let Chart.js use its default colors
-        border = 3;
-    } else{
-        border = undefined;
-    }
-  
     chartDataRef.current = {
       labels: labels,
       datasets: [
         {
           label: dataOptions[selectedDataOption].label,
           data: counts,
-          borderWidth: border,
-          backgroundColor: backgroundColors,
-          borderJoinStyle: 'miter'
+          borderWidth: 2,
         },
       ],
     };
 
-    myChartRef.current.config.type = selectedChartType;
+    myChartRef.current.config.type = selectedChartType; // Update the chart type
     myChartRef.current.update();
   };
 
@@ -136,7 +109,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center ">Vehicle</h2>
+              <h2 className="text-center ">Time</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -181,10 +154,12 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       <Row className="justify-content-center mt-4">
         <Col md={12}>
         <canvas ref={chartRef} style={{ width: '100%', height: '100%' }}></canvas>
+        {/* <canvas ref={chartRef} width="1000" height="300"></canvas> */}
+
         </Col>
       </Row>
     </Container>
   );
 }
 
-export default VehileChart;
+export default TimeChart;

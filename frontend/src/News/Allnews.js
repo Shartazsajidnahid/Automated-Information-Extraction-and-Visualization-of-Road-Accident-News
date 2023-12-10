@@ -48,7 +48,7 @@ function Allnews() {
     if (text.length + title.length > maxLength) {
       const extra = text.length + title.length - maxLength;
       const length = text.length-extra;
-      console.log(length);
+      // console.log(length);
       return text.substring(0, text.length-extra) + "...";
     }
     return text;

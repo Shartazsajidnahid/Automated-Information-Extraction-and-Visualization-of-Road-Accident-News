@@ -17,7 +17,7 @@ export default function Map() {
       try {
         const response = await axios.get(`${apiBaseUrl}/graphchart/get-heatmap-data?occurrence_type=${occurrence_type}`);
         setdistrictLocations(response.data);
-        console.log("Data fetched successfully:", response.data);
+        // console.log("Data fetched successfully:", response.data);
   
         if (!mapRef.current) {
           const map = L.map("map").setView([23.8103, 90.4125], 8);
@@ -38,6 +38,5 @@ export default function Map() {
     fetchData();
   }, []);
   
-
   return <div id="map" style={{ height: "100vh" }}></div>;
 }
