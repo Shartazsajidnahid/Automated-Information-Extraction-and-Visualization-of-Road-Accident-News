@@ -84,12 +84,39 @@ async def update_one_table(table_name:str, typename: str, dead: int, injured: in
     await update_occurrence(table_name, typename, "dead", dead)
     await update_occurrence(table_name, typename, "injured", injured)
 
-# for entry in your_array:
-#         district_name = entry["typename"]
-#         occurrence_value = entry["occurrence"]
-#         dead_value = entry["dead"]
-#         injured_value = entry["injured"]
 
-#         await update_occurrence("district_info", district_name, "occurrence", occurrence_value)
-#         await update_occurrence("district_info", district_name, "dead", dead_value)
-#         await update_occurrence("district_info", district_name, "injured", injured_value)
+async def highchartData():
+    demo_data = [
+        ['bd-da', 0], ['bd-kh', 0], ['bd-ba', 0],
+        ['bd-cg', 0], ['bd-sy', 0], ['bd-rj', 0], ['bd-rp', 0], ['bd-my', 0]
+    ]
+
+    divisiondata = await get_occurence_data("division_info", "occurrence")
+    
+    # for item in divisiondata:
+    #     print(item)
+
+    for item in divisiondata:    #ময়মনসিংহ   
+        if item.get('typename') == "ঢাকা": 
+            demo_data[0][1] = item.get('count')
+        elif item.get('typename') == "খুলনা": 
+            demo_data[1][1] = item.get('count')
+        elif item.get('typename') == "বরিশাল": 
+            demo_data[2][1] = item.get('count')
+        elif item.get('typename') == "চট্টগ্রাম": 
+            demo_data[3][1] = item.get('count')
+        elif item.get('typename') == "সিলেট": 
+            demo_data[4][1] = item.get('count')
+        elif item.get('typename') == "রাজশাহী": 
+            demo_data[5][1] = item.get('count')
+        elif item.get('typename') == "রংপুর": 
+            demo_data[6][1] = item.get('count')
+        elif item.get('typename') == "ময়মনসিংহ": 
+            demo_data[0][1] += item.get('count')
+            
+    
+    return demo_data
+
+
+
+    

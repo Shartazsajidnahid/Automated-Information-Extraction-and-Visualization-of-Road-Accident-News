@@ -16,6 +16,8 @@ const MapChart = ({ height, width }) => {
     maxWidth: '800px',
     margin: '0 auto',
   };
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,6 +25,7 @@ const MapChart = ({ height, width }) => {
         const topology = await axios.get(
           'https://code.highcharts.com/mapdata/countries/bd/bd-all.topo.json'
         );
+        const response = await axios.get(`${apiBaseUrl}/graphchart/get-highchart-data`);
 
         // Provided demo data
         const demoData = [
@@ -57,7 +60,7 @@ const MapChart = ({ height, width }) => {
           },
           series: [
             {
-              data: demoData,
+              data: response.data,
               name: 'Random data',
               states: {
                 hover: {

@@ -5,7 +5,7 @@ import { Form, Container, Row, Col } from "react-bootstrap";
 import Chart from "chart.js/auto";
 import "../App.css"
 
-function PlaceChart({ type }) {
+function DivisionChart({ type }) {
   const [chartType, setChartType] = useState(type);
   const [dataOption, setDataOption] = useState("occurrence");
   const [occurrencedata, setOccurrencedata] = useState([]);
@@ -15,7 +15,7 @@ function PlaceChart({ type }) {
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
-  const table_name = "district_info";
+  const table_name = "division_info";
   const occurrence_type = "occurrence";
   const death_type = "dead";
   const injury_type = "injured";
@@ -23,9 +23,9 @@ function PlaceChart({ type }) {
 
 
   const dataOptions = {
-    occurrence: { data: occurrencedata, label: "Occurrences - District level", key: "typename" },
-    injury: { data: injurydata, label: "Injuries - District level", key: "typename" },
-    death: { data: deathdata, label: "Deaths - District level", key: "typename" },
+    occurrence: { data: occurrencedata, label: "Occurrences - Division level", key: "typename" },
+    injury: { data: injurydata, label: "Injuries - Division level", key: "typename" },
+    death: { data: deathdata, label: "Deaths - Division levle", key: "typename" },
   };
 
   useEffect(() => {
@@ -158,7 +158,7 @@ function PlaceChart({ type }) {
           <Form>
             <Row>
               <Col md={4}>
-              <h2 className="text-center">Districts</h2>
+              <h2 className="text-center">Divisions</h2>
               </Col>
               <Col md={4}>
                 <Form.Group controlId="chartType">
@@ -211,4 +211,4 @@ function PlaceChart({ type }) {
   );
 }
 
-export default PlaceChart;
+export default DivisionChart;

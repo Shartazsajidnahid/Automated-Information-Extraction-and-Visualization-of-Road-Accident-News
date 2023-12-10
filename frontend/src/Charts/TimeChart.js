@@ -23,9 +23,9 @@ function TimeChart({ type }) {
 
 
   const dataOptions = {
-    occurrence: { data: occurrencedata, label: "Vehicle Occurrence", key: "typename" },
-    injury: { data: injurydata, label: "Vehicle Occurrence", key: "typename" },
-    death: { data: deathdata, label: "Vehicle Occurrence", key: "typename" },
+    occurrence: { data: occurrencedata, label: "Occurrences - Time", key: "typename" },
+    injury: { data: injurydata, label: "Injuries - Time", key: "typename" },
+    death: { data: deathdata, label: "Deaths - Time", key: "typename" },
   };
 
   useEffect(() => {

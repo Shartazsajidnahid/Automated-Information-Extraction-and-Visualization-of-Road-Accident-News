@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from ..controllers.graphdataController import get_occurence_data
+from ..controllers.graphdataController import get_occurence_data, highchartData
 from fastapi.responses import JSONResponse
 from .geolocations import bangladesh_district_geolocations
 
@@ -52,17 +52,9 @@ async def get_heatmap_data(occurrence_type: str):
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
-
-
-
-
-
-
-
-
-
-
-
+@router.get("/get-highchart-data")
+async def get_highchart_data():
+    return await highchartData()
 
 dummy_data = [
     {"lat": 23.8103, "lon": 90.4125, "value": 10},

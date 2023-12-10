@@ -9,6 +9,7 @@ import TimeChart from "./Charts/TimeChart";
 import Heatchart from "./Heatchart/Heatchart"
 import Heatmap from "./Heatmap"
 import "./App.css"
+import DivisionChart from "./Charts/DivisionChart";
 
 function Dashboard() {
   return (
@@ -21,12 +22,12 @@ function Dashboard() {
         <TimeChart  type= {"line"}></TimeChart>
         </Col>
         <Col md={4} className="   custombackground full-height-col border">
-          <PlaceChart type={"radar"}></PlaceChart>
+          <PlaceChart type={"pie"}></PlaceChart>
         </Col>
       </Row>
       <Row className="full-height-row">
       <Col md={4} className="   custombackground full-height-col border">
-          <PlaceChart type={"bar"}></PlaceChart>
+          <DivisionChart type={"radar"}></DivisionChart>
         </Col>
         <Col md={4} className="   custombackground full-height-col border">
           <Link to="/heatmap"><Heatmap height="400px" width="400px" ></Heatmap></Link>
