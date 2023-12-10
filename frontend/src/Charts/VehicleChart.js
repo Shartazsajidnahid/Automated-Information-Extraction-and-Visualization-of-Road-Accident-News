@@ -7,19 +7,25 @@ import "../App.css"
 
 function VehileChart({type}) {
   const [chartType, setChartType] = useState(type);
-  const [dataOption, setDataOption] = useState("vehicles");
-  const [vehicledata, setVehicledata] = useState([]);
+  const [dataOption, setDataOption] = useState("occurrence");
+  const [occurrencedata, setOccurrencedata] = useState([]);
+  const [deathdata, setDeathdata] = useState([]);
+  const [injurydata, setInjurydata] = useState([]);
   // const navigate = useNavigate();
   const chartRef = useRef(null);
   const chartDataRef = useRef(null);
   const myChartRef = useRef(null);
   const table_name = "vehicle_info";
   const occurrence_type = "occurrence";
+  const death_type = "dead";
+  const injury_type = "injured";
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 
   const dataOptions = {
-    vehicles: { data: vehicledata, label: "Vehicle Occurrence", key: "typename" },
+    occurrence: { data: occurrencedata, label: "Vehicle Occurrence", key: "typename" },
+    injury: { data: injurydata, label: "Vehicle Occurrence", key: "typename" },
+    death: { data: deathdata, label: "Vehicle Occurrence", key: "typename" },
   };
 
   useEffect(() => {
@@ -27,33 +33,13 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     // console.log(vehicledata);
     // updateChart(chartType ,dataOption);
     updateChartAsync();
-  }, [vehicledata])
-
-  useEffect(() => {
-    // Fetch vehicledata
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${apiBaseUrl}/graphchart/get-data?table_name=${table_name}`);
-        console.log(response.data);
-        setVehicledata(["{typename: 'মোটরসাইকেল', count: 5}"],...response.data);
-        console.log(vehicledata);
-    
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if(vehicledata.length <= 0){
-      fetchData();
-      // updateChart(chartType, dataOption);
-    }
-  }, [apiBaseUrl, table_name]);
+  }, [occurrencedata, injurydata, deathdata])
   
-  const fetchData = async () => {
+  const fetchOccurrenceData = async () => {
     await axios
-      .get(`${apiBaseUrl}/graphchart/get-data?table_name=${table_name}`)
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${occurrence_type}`)
       .then((response) => {
-        setVehicledata(response.data);
+        setOccurrencedata(response.data);
         // console.log(vehicledata);
       })
       .catch((error) => {
@@ -61,9 +47,37 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
       });
   };
 
+  const fetchDeathData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${death_type}`)
+      .then((response) => {
+        setDeathdata(response.data);
+        // console.log(vehicledata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const fetchInjuryData = async () => {
+    await axios
+      .get(`${apiBaseUrl}/graphchart/get-data-by-type?table_name=${table_name}&occurrence_type=${injury_type}`)
+      .then((response) => {
+        console.log("injury: ");
+        console.log(response.data);
+        setInjurydata(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
-    fetchData();
+    fetchOccurrenceData();
+    fetchDeathData();
+    fetchInjuryData();
   }, []);
+
   const updateChartAsync = async () => {
     if (chartRef.current) {
       if (myChartRef.current) {
@@ -84,7 +98,7 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     
     updateChartAsync();
-  }, [chartType, dataOption, vehicledata]);
+  }, [chartType, dataOption, occurrencedata]);
   
   const updateChart = (selectedChartType, selectedDataOption) => {
     
@@ -175,10 +189,9 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
                       updateChart(chartType, selectedDataOption);
                     }}
                   >
-                    <option value="vehicles">Vehicles</option>
-                    <option value="places">Places</option>
-                    <option value="dayofweek">Weekdays</option>
-                    <option value="timeofday">Time of Day</option>
+                    <option value="occurrence">Occurrences</option>
+                    <option value="injury">Injuries</option>
+                    <option value="death">Deaths</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
