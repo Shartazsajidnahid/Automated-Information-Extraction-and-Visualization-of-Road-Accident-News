@@ -191,10 +191,10 @@ def locate(location_str):
         if(location["found"]=="found"):
             if(location["subdistrict"]!=""):
                 final_loc = location
-                break
             else: 
-                final_loc = location
-                continue
+                if final_loc["subdistrict"]=="":
+                    final_loc = location
+                
     # print(final_loc)
     return final_loc
 
