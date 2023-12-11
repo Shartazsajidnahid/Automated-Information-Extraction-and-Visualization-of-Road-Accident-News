@@ -26,8 +26,10 @@ const NewsArticleDetails = () => {
       <div className="card mb-3">
         <div className="card-body  custombackground">
           <h3 className="card-title text-center mt-1">{newsArticle?.title}</h3>
+          <p className="text-center mt-1">{newsArticle?.bangla_timestamp}</p>
           <hr></hr>
           <p className="card-text">{newsArticle?.content}</p>
+          
         </div>
       </div>
       <table className="table table-bordered table-striped rounded custombackground">

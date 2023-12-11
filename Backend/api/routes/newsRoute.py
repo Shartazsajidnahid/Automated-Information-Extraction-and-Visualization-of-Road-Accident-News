@@ -20,7 +20,7 @@ def get_dummy_news():
 
 @router.get("/scrape_news")
 async def scrape_news():
-    return await read_and_push_from_csv()
+    return await scrape_all()
 
 
 @router.get("/news-article/{article_id}")

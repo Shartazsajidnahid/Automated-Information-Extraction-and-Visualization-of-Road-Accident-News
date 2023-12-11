@@ -15,9 +15,11 @@ class Parameter(BaseModel):
     injured: int = 0
 
 class NewsArticle(BaseModel):
-    title: str
-    content: str
-    source: str
-    link: str
+    title: str = ""
+    content: str = ""
+    source: str = ""
+    link: str = ""
     parameters: Parameter = Parameter()
     timestamp: datetime = datetime.now()
+    actual_timestamp: datetime = datetime.now()
+    bangla_timestamp: str = ""

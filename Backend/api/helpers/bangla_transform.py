@@ -9,8 +9,8 @@ parent_directory = current_file_path.parent
 folder_name = "test-nahid-trained"
 folder_path = parent_directory / folder_name
 
-bnqa = BanglaQA(folder_path)
-# bnqa = BanglaQA()
+# bnqa2 = BanglaQA(folder_path)
+bnqa = BanglaQA()
 
 
 location = "কোথায় দুর্ঘটনা ঘটেছে?"
