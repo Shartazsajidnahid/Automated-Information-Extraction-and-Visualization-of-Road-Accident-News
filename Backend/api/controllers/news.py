@@ -78,38 +78,46 @@ async def get_news_by_id(news_id: str):
 
 
 async def create_news(news_article: NewsArticle):
-    parameters = await find_parameters(news_article.content)
-    
-    if parameters:
-        districts = locate(parameters["location"])
-        vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
-        deadno = deadinjured_functions.find_dead_injured(news_article.content, "নিহত", parameters["dead"], parameters["injured"])
-        injuredno = deadinjured_functions.find_dead_injured(news_article.content, "আহত",parameters["injured"], parameters["dead"])
-        new_params = Parameter(
-            location=parameters["location"], 
-            division = districts["division"],
-            district = districts["district"],
-            subdistrict = districts["subdistrict"],
-            time = newtime,
-            dayofweek = dow,
-            timeofday = tod,
-            vehicle1 = vehicle1,
-            vehicle2 = vehicle2,
-            dead = int(deadno),
-            injured = int(injuredno)
-             )
-        # print(new_params)
-        # print(vehicles)
-        news_article.parameters = new_params
-    
-    
-    news_article.timestamp=datetime.now();
-    result = await news_articles_collection.insert_one(news_article.dict())
+    existing_article = await news_articles_collection.find_one({"title": news_article.title})
+    if existing_article is None:
+        parameters = await find_parameters(news_article.content)
+        print(parameters)
+        
+        if parameters:
+            districts = locate(parameters["location"])
+            
+            
+            vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
+            deadno = deadinjured_functions.find_dead_injured(news_article.content, "নিহত", parameters["dead"], parameters["injured"])
+            injuredno = deadinjured_functions.find_dead_injured(news_article.content, "আহত",parameters["injured"], parameters["dead"])
+            new_params = Parameter(
+                location=parameters["location"], 
+                division = districts["division"],
+                district = districts["district"],
+                subdistrict = districts["subdistrict"],
+                time = newtime,
+                dayofweek = dow,
+                timeofday = tod,
+                vehicle1 = vehicle1,
+                vehicle2 = vehicle2,
+                dead = int(deadno),
+                injured = int(injuredno)
+                )
+            # print(new_params)
+            # print(vehicles)
+            news_article.parameters = new_params
+        
+        
+        news_article.timestamp=datetime.now();
+        result = await news_articles_collection.insert_one(news_article.dict())
 
-    await updateGraphData(news_article)
+        await updateGraphData(news_article)
+        print("created successfully")
+        return news_article, "yes"
 
-    return news_article
-
+    else:
+        print("already exists")
+        return "already exists", "no"
 async def create_news2(news_article: NewsArticle):
      # Check if the news article already exists in db
     existing_article = await news_articles_collection.find_one({"title": news_article.title})

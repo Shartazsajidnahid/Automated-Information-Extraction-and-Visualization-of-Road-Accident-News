@@ -18,10 +18,10 @@ news = "বরগুনার পাথরঘাটা উপজেলায় থ
 def get_time(sentence):
     global dowfound, todfound, dow, tod 
     # words = bn.word_tokenize(sentence)
-    print(sentence)
-    print("")
+    # print(sentence)
+    # print("")
     dresult, doww = functions.get_week_day(sentence)
-    print(dresult, " ", doww,)
+    # print(dresult, " ", doww,)
 
     # Day of Week
     if dresult and not dowfound:
@@ -31,7 +31,7 @@ def get_time(sentence):
     tresult, todd =functions.get_dayornight(sentence)
     # Time of Day
     if tresult and not todfound:
-        print(tresult, " ", todd)
+        # print(tresult, " ", todd)
         todfound = True    
         tod = todd
 

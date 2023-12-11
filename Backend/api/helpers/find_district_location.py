@@ -130,12 +130,9 @@ mymensingh_districts = {
     "ময়মনসিংহ": [  "ফুলবাড়ীয়া",  "ত্রিশাল",  "ভালুকা",  "মুক্তাগাছা",  "ময়মনসিংহ",  "ধোবাউড়া",  "ফুলপুর",  "হালুয়াঘাট",  "গৌরীপুর",  "গফরগাঁও",  "ঈশ্বরগঞ্জ",  "নান্দাইল",  "তারাকান্দা"],
     "জামালপুর": ["জামালপুর", "মেলান্দহ", "ইসলামপুর", "দেওয়ানগঞ্জ", "সরিষাবাড়ী", "মাদারগঞ্জ", "বকশীগঞ্জ"],
     "নেত্রকোণা": ["বারহাট্টা", "দুর্গাপুর", "কেন্দুয়া", "আটপাড়া", "মদন", "খালিয়াজুরী", "কলমাকান্দা", "মোহনগঞ্জ", "পূর্বধলা", "নেত্রকোণা"]
-
 }
 bangladesh.add_division("ময়মনসিংহ")
 bangladesh.add_districts("ময়মনসিংহ", mymensingh_districts)
-
-
    
 def find_location_in_bangladesh(location_name):
     found = False
@@ -172,22 +169,25 @@ def find_location_in_bangladesh(location_name):
     return result
 
 def replace_hyphens_with_space(input_string):
-    refinedstr = input_string.replace('-', ' ')
-    refinedstr = refinedstr.replace("রাজধানী", "ঢাকা")
-    return 
-
+    if "-" in input_string:
+        input_string = input_string.replace('-', ' ')
+    if "রাজধানী" in input_string:
+        input_string = input_string.replace("রাজধানী", "ঢাকা")
+    return input_string
 
 def locate(location_str):
     location_str = replace_hyphens_with_space(location_str)
+    print(location_str)
     final_loc = {
                 "subdistrict": "",
                 "district": "",
                 "division": "",
                 "found": "notfound"
             }
-    for w in bn.word_tokenize(location_str):
+    # for w in bn.word_tokenize(location_str):
+    for w in location_str.split():
         stemmedWord = bengali_stem_er(bn.stemmer(w))
-        location = find_location_in_bangladesh(stemmedWord)
+        location =  find_location_in_bangladesh(stemmedWord)
         if(location["found"]=="found"):
             if(location["subdistrict"]!=""):
                 final_loc = location
@@ -195,13 +195,14 @@ def locate(location_str):
             else: 
                 final_loc = location
                 continue
+    # print(final_loc)
     return final_loc
 
 
 # Example usage
-location_str = "ফেনীরর কসকা এলাকায়"
+# location_str = "ফেনীরর কসকা এলাকায়"
 # print(locate(location_str))
-location_to_find = "হরিরামপুর"
+# location_to_find = "হরিরামপুর"
 # results = find_location_in_bangladesh(location_to_find)
 # print(results)
 

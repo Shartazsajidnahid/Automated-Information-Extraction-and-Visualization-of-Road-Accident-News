@@ -17,18 +17,18 @@ function Dashboard() {
     <Container fluid className="full-height-container custombackground" >
       <Row className="full-height-row border">
         <Col md={4} className="  custombackground full-height-col border" >
-          <VehicleChart type={"bar"}></VehicleChart>
+          <VehicleChart type={"radar"}></VehicleChart>
         </Col>
         <Col md={4} className="  custombackground full-height-col border">
         <DowChart  type= {"line"}></DowChart>
         </Col>
         <Col md={4} className="   custombackground full-height-col border">
-          <PlaceChart type={"pie"}></PlaceChart>
+          <PlaceChart type={"bar"}></PlaceChart>
         </Col>
       </Row>
       <Row className="full-height-row border">
       <Col md={4} className="   custombackground full-height-col border">
-          <DivisionChart type={"radar"}></DivisionChart>
+          <DivisionChart type={"pie"}></DivisionChart>
         </Col>
         <Col md={4} className="   custombackground full-height-col border">
           <Link to="/heatmap"><Heatmap height="400px" width="400px" ></Heatmap></Link>

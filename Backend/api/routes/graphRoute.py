@@ -8,7 +8,7 @@ router = APIRouter()
 def get_district_coordinates(district, intensity):
     if district in bangladesh_district_geolocations:
         coordinates = bangladesh_district_geolocations[district]
-        return coordinates + [intensity*100]
+        return coordinates + [intensity*300]
     else:
         return None
 

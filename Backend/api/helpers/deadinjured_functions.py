@@ -81,7 +81,7 @@ def find_from_content(content, keyword_set):
     sentences_with_keyword = find_sentences_with_keyword(content, keyword_set)
     count = 0
     for sen in sentences_with_keyword:
-        print(sen)
+        # print(sen)
         if "আরেকজন" in sen:
             count +=1
         else:
@@ -89,7 +89,7 @@ def find_from_content(content, keyword_set):
           if number and (number!=count or arow_present(sen)):
               count += number
         
-        print("count: ", count)
+        # print("count: ", count)
     return count
 
 def set_keyword(deadorinjured):

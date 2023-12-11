@@ -40,7 +40,9 @@ async def scrape_all():
     all_links= []
     all_news = []
     # print("clicked")
+    inserted = 0
     while load_more_button:
+        temp_news = []
         print("all news: ", len(all_news))
         actions.click(load_more_button)
         actions.perform()
@@ -60,29 +62,26 @@ async def scrape_all():
                 source="Prothom Alo",
                 content=str(content)
             )
-                
-            # all_links.append(href)
-            # print(news_item)
             if(len(content)>=100):
-                all_news.append(news_item)
+                print(news_item.title)
+                if news_item not in all_news:
+                    print("yes")
+                    all_news.append(news_item)
+                    temp_news.append(news_item)
+                    response = await create_news(news_item)
+                    if response[1] == "yes":
+                        inserted = inserted+1
+                        print("inserted: ", inserted)
+                    else:
+                        print("some error occurred")
 
         load_more_button = driver.find_element(By.CLASS_NAME, "more")
-        if(len(all_news)>=30):
+        if(len(all_news)>=100):
             break
-    for news in all_news:
-        print(news.title)
+    
     driver.quit()
     # news_articles = scrape_all()
-    totals = len(all_news)
-
-    inserted = 0
-    # for news_article in all_news:
-        
-    #     response = await create_news(news_article)
-    #     if response[2] == "yes":
-    #         inserted = inserted+1
-    #         print("inserted: ", inserted)
-    #     print("some error occurred")
+    # totals = len(all_news)
     return all_news
 
 # async def scrape_all():
@@ -226,10 +225,10 @@ async def read_and_push_from_csv():
 
             response = await create_news(news_article)
             print(response)
-            if response and response[2] == "yes":
+            if response and response[1] == "yes":
                 inserted += 1
                 print("Inserted: ", inserted)
-            elif response and response[2] == "no":
+            elif response and response[1] == "no":
                 already = already+1
                 print("already: ", already)
         print("totals: ", totals)
