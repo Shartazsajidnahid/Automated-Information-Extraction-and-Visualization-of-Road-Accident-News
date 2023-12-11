@@ -37,10 +37,18 @@ def get_time(sentence):
 
     
 def process_news(news, time_from_model):
-    global dowfound, todfound, dow, tod
+    global dowfound, todfound, dow, tod, deadfound, injuredfound,vehiclefound
+    deadfound = False
+    injuredfound = False
+    vehiclefound = False
+    dowfound = False
+    todfound = False
+    tod = ""
+    dow = ""
     vehicle1 = ""
     vehicle2 = ""
-
+    print(dow)
+    print(tod)
     sentence_tokens = bn.sent_tokenize(news)
 
     vehicles = functions.get_vehicles(news)
@@ -66,5 +74,7 @@ def process_news(news, time_from_model):
     if modelnotgood:
         time_from_model = dow + " " + tod
     
+    print(dow)
+    print(tod)
     
     return vehicle1, vehicle2, dow, tod, time_from_model

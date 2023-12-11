@@ -98,7 +98,7 @@ async def scrape_all():
         load_more_button = driver.find_element(By.CLASS_NAME, "more")
         # print(load_more_button)
 
-        if(len(all_link)>=100):
+        if(inserted>=300):
             break
     
     driver.quit()
