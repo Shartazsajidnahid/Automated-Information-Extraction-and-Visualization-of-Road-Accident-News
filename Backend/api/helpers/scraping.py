@@ -214,6 +214,9 @@ async def read_and_push_from_csv():
         totals = 0
         already = 0
         for row in reader:
+            print(row['title'])
+            if len(row['content'])>1500:
+                continue
             totals = totals+1
             news_article = NewsArticle(
                 title=row['title'],
@@ -221,7 +224,8 @@ async def read_and_push_from_csv():
                 source=row['source'],
                 content=row['content']
             )
-            # print(news_article)
+
+           
 
             response = await create_news(news_article)
             print(response)
