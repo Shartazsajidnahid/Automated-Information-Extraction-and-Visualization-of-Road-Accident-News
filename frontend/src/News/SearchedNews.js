@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import LatestNews from "./LatestNews";
 import Leftbar from "./Leftbar";
+import "../App.css"
 
 function SearchedNews() {
   const [news, setNews] = useState([]);
@@ -11,12 +12,22 @@ function SearchedNews() {
 
   const {keyword, division} = location.state;
 
+  const {vehiclekeyword, vehicle} = location.state;
+
   const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
+
+  
     // Fetch all news
     if(division){
       axios.get(`${apiBaseUrl}/news/news_by_division?division=${keyword}`).then((response) => {
+        setNews(response.data);
+      });
+    }
+
+    if(vehicle){
+      axios.get(`${apiBaseUrl}/news/news_by_vehicle?vehicle=${vehiclekeyword}`).then((response) => {
         setNews(response.data);
       });
     }
@@ -39,7 +50,7 @@ function SearchedNews() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2 mt-4 text-center">
+        <div className="col-md-2 text-center">
           <Leftbar></Leftbar>
         </div>
         <div className="col-md-7 border-start">
@@ -67,7 +78,7 @@ function SearchedNews() {
           </div>
         </div>
         <div className="col-md-3 border-start">
-            Tofill
+            
           <LatestNews latestNews={latestNews} />
         </div>
       </div>

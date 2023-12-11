@@ -92,11 +92,12 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/visualizeDashboard">Visualize</Link>
             </li>
+            
             <li className="nav-item">
               <Link className="nav-link" to="/heatmap">Heatmap</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/heat">Heatchart</Link>
+              <Link className="nav-link" to="/heat">Detailed Heatmap</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link disabled"></Link>

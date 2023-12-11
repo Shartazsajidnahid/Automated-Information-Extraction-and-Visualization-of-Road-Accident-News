@@ -6,6 +6,7 @@ import "./App.css";
 import PlaceChart from "./Charts/PlaceChart";
 import VehicleChart from "./Charts/VehicleChart"
 import TimeChart from "./Charts/TimeChart";
+import DowChart from "./Charts/DowChart"
 import Heatchart from "./Heatchart/Heatchart"
 import Heatmap from "./Heatmap"
 import "./App.css"
@@ -14,18 +15,18 @@ import DivisionChart from "./Charts/DivisionChart";
 function Dashboard() {
   return (
     <Container fluid className="full-height-container custombackground" >
-      <Row className="full-height-row">
+      <Row className="full-height-row border">
         <Col md={4} className="  custombackground full-height-col border" >
           <VehicleChart type={"bar"}></VehicleChart>
         </Col>
         <Col md={4} className="  custombackground full-height-col border">
-        <TimeChart  type= {"line"}></TimeChart>
+        <DowChart  type= {"line"}></DowChart>
         </Col>
         <Col md={4} className="   custombackground full-height-col border">
           <PlaceChart type={"pie"}></PlaceChart>
         </Col>
       </Row>
-      <Row className="full-height-row">
+      <Row className="full-height-row border">
       <Col md={4} className="   custombackground full-height-col border">
           <DivisionChart type={"radar"}></DivisionChart>
         </Col>

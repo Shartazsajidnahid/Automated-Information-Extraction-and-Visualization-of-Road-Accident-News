@@ -11,7 +11,7 @@ function LatestNews({ latestNews }) {
   return (
     <div>
       <div className="row custombackground" >
-        <h3 className="text-center mt-3 mb-3">Top 5 Latest News</h3>
+        <h3 className="text-center mt-3 mb-3">Top 5 Latest News &nbsp;<i class="fa fa-clock-o" aria-hidden="true"></i></h3>
       </div>
       <hr />
       <div className="row">

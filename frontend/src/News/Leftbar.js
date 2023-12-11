@@ -19,10 +19,20 @@ function Leftbar() {
   ];
   const division = "division"
 
+  const vehiclekeywords = [
+    "মোটরসাইকেল",
+    "বাস",
+    "ট্রাক",
+    "সিএনজি",
+    "অটোরিকশা",
+    "ট্রেন"
+  ];
+  const vehicle = "vehicle"
+
   return (
     <div>
       <div className="row custombackground" >
-        <h3 className="text-center mt-3 mb-3">Divisions</h3>
+        <h3 className="text-center mt-3 mb-3">Divisions &nbsp; <i class="fa fa-map-marker" aria-hidden="true"></i></h3>
       </div>
       <hr />
       <ul className="list-group">
@@ -37,6 +47,27 @@ function Leftbar() {
           }}
         >
           <span>{keyword}</span>
+        </Button>
+        ))}
+      </ul>
+      <hr></hr>
+      <div className="row custombackground" >
+        <h3 className="text-center mt-3 mb-3">Vehicles &nbsp;<i class="fa fa-truck" aria-hidden="true"></i></h3>
+      </div>
+      <hr />
+      <ul className="list-group">
+        {vehiclekeywords.map((vehiclekeyword, index) => (
+          
+          <Button
+          key={index}
+          className="list-group-item btn-sm custombackground"
+          style={{  borderRadius: '5px',border: '0.2px solid #2b6777' }}
+          onClick={() => {
+            navigate("/searchednews", {replace:true, state:{vehiclekeyword,vehicle}});
+          }}
+        >
+          <span>{vehiclekeyword}
+          </span>
         </Button>
         ))}
       </ul>

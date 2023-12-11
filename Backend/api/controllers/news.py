@@ -63,7 +63,6 @@ async def fetch_latest_news():
     return news
 
 
-
 async def get_news_by_id(news_id: str):
     try:
         news_object_id = ObjectId(news_id)
@@ -86,7 +85,6 @@ async def create_news(news_article: NewsArticle):
         vehicle1, vehicle2, dow, tod, newtime = process_news_tokens.process_news(news_article.content, parameters["time"])
         deadno = deadinjured_functions.find_dead_injured(news_article.content, "নিহত", parameters["dead"], parameters["injured"])
         injuredno = deadinjured_functions.find_dead_injured(news_article.content, "আহত",parameters["injured"], parameters["dead"])
-        print("injuredno: " , )
         new_params = Parameter(
             location=parameters["location"], 
             division = districts["division"],

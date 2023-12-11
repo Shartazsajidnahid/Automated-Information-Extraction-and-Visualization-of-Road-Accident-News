@@ -50,10 +50,24 @@ async def create_news_article(news_article: NewsArticle):
 
 @router.get("/news_by_division")
 async def get_news_by_division(division: str):
-    # print("Hey");
-    # print(division);
+    print("Hey");
+    print(division);
     news_articles = await news_articles_collection.find({"parameters.division": division}).to_list(None)
 
+    # Convert ObjectIds to strings
+    for article in news_articles:
+        article["_id"] = str(article["_id"])
+
+    return news_articles
+
+@router.get("/news_by_vehicle")
+async def get_news_by_vehicle(vehicle: str):
+    print("Hey");
+    print(vehicle);
+    vehicle1 = await news_articles_collection.find({"parameters.vehicle1": vehicle}).to_list(None)
+    vehicle2 = await news_articles_collection.find({"parameters.vehicle2": vehicle}).to_list(None)
+    # print(vehicle2)
+    news_articles = vehicle1 + vehicle2
     # Convert ObjectIds to strings
     for article in news_articles:
         article["_id"] = str(article["_id"])
